@@ -123,7 +123,7 @@ PHP_FUNCTION(doqueries)
 	pthread_t threads[num_threads];
         long t;
         for(t=0; t<num_threads; t++){
-                if( pthread_create( &threads[t], NULL, do_query, (void*)*queries_str[t] ) == -1 ) error("Thread nicht erstellt");
+                if( pthread_create( &threads[t], NULL, do_query, (void*)queries_str[t] ) == -1 ) error("Thread nicht erstellt");
         }
 
         void* result;
