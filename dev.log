@@ -1,0 +1,9 @@
+Ok, neuer Tag, neues Glück!
+Heutiger Auftrag: Nehme Array aus php entgegen.
+	zend_uint nt = Z_REFCOUNT_P(queries);
+
+Starte für jeden query im array einen Thread. 
+Gebe einen Array mit Ergebnis pro query aus. 
+
+
+Denke außerdem daran, die Funktion error aus myincl rauszunehmen und für php umzuschreiben. 
