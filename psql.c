@@ -147,7 +147,8 @@ PHP_FUNCTION(doqueries)
         array_init(return_value);
         add_assoc_long(return_value, "Hat geklappt", 1);
 
-	RETURN_TRUE;
+	/* RETURN_TRUE;
+	*/
 }
 /* }}} */
 
