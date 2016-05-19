@@ -8,8 +8,3 @@ Ok, neuer Auftrag.
 
 Denke außerdem daran, die Funktion error aus myincl rauszunehmen und für php umzuschreiben. 
 
-
-
-Aha, ein Problem ekannt. So wie der Code derzeit gestaltet ist, erzeuge ich die Eingangsvariablen zu den threads in einem loop. 
-Bei einem loop überschreibt c aber mit jeder Iteration die Adresse von pt - darum führen alle threads denselben query aus: sie erhalten alle 
-denselben pointer, und dort liegen die letzten Werte, die der forloop geschrieben hat. 

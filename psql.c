@@ -123,7 +123,20 @@ PHP_FUNCTION(doqueries)
         unsigned int port = 0;
         char *socket = NULL;
         unsigned int flags = 0;
+	thread_parameter tps[laenge_ht];
 
+	int i;
+	for(i=0; i<laenge_ht; i++){
+		tps[i].query = queries_str[i];
+		tps[i].host = host;
+		tps[i].usr = usr;
+		tps[i].pw = pw;
+		tps[i].db = db;
+		tps[i].port = port;
+		tps[i].socket = socket;
+		tps[i].flags = flags;
+	}
+	
 
 	if(mysql_library_init(0, NULL, NULL)){
                 php_printf("Oh-oh... mysql_library_init hat nicht funktioniert.");
@@ -133,9 +146,7 @@ PHP_FUNCTION(doqueries)
 	pthread_t threads[num_threads];
         long t;
         for(t=0; t<num_threads; t++){
-		char * query = queries_str[t];
-		thread_parameter tp = {query, host, usr, pw, db, port, socket, flags};
-                if( pthread_create( &threads[t], NULL, do_query, (void*)&tp ) == -1 ) error("Thread nicht erstellt");
+                if( pthread_create( &threads[t], NULL, do_query, (void*)&tps[t] ) == -1 ) error("Thread nicht erstellt");
         }
 
         void* result;
