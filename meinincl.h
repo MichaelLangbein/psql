@@ -8,7 +8,13 @@
 
 typedef struct {
 	char *query;
-	MYSQL *conn;
+	char *host;
+        char *usr;
+        char *pw;
+        char *db; 
+        unsigned int port;
+        char *socket;
+        unsigned int flags;
 } thread_parameter;
 
 

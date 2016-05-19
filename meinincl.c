@@ -73,15 +73,9 @@ void error(char *msg){
 
 
 void* do_query(void* tp){
-	char *host = "localhost";
-	char *usr = "root";
-	char *pw = "rinso86";
-	char *db = "hnddat";
-	unsigned int port = 0; 
-	char *socket = NULL;
-	unsigned int flags = 0;
-	MYSQL *conn = do_connect(host, usr, pw, db, port, socket, flags);
-	char *query = (char*)tp;
+	thread_parameter * thrpar = (thread_parameter *)tp;
+	MYSQL *conn = do_connect(thrpar->host, thrpar->usr, thrpar->pw, thrpar->db, thrpar->port, thrpar->socket, thrpar->flags);
+	char *query = thrpar->query;
 	printf("Thread wird gleich folgenden Query ausführen:  %s\n", query);
 	
 	MYSQL_RES *reslt = get_result_set(conn, query, 1);

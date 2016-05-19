@@ -5,32 +5,11 @@ Ok, neuer Auftrag.
 	   In späteren Versionen können wir den Input so verändern, dass Infos über die Datentypen der Abfrage
 	   mitgegeben werden. 
 	2. Paste diesen Ausgabearray korrekt in die Ausgabe-zvals.
-	3. Verfolge in htop, wieviele Prozesse wirklich entstehen.
 
 Denke außerdem daran, die Funktion error aus myincl rauszunehmen und für php umzuschreiben. 
 
 
 
-Long-Term-Goals:
-
-1. Abfrage beliebiger queries in parallel
-
-$queries = array(
-	array(
-		'query' => 'select * from muppets',
-		'cols' => array('int', 'string', 'string')
-	),
-	array(
-		'query' => 'select Pegelnummer, Werte_W from hnddat',
-		'cols' => array('int', 'csv')
-	)
-)
-$result = doqueries($queries);
-
-
-2. Nur ein query, beutzen C vor allem, um schneller CSV splitten zu können
-
-$query = array(
-	'query' = 'select Pegelnummer., Werte_W from hnddat',
-	'cols' = array('int', 'csv')
-);
+Aha, ein Problem ekannt. So wie der Code derzeit gestaltet ist, erzeuge ich die Eingangsvariablen zu den threads in einem loop. 
+Bei einem loop überschreibt c aber mit jeder Iteration die Adresse von pt - darum führen alle threads denselben query aus: sie erhalten alle 
+denselben pointer, und dort liegen die letzten Werte, die der forloop geschrieben hat. 
