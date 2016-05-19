@@ -1,9 +1,36 @@
-Ok, neuer Tag, neues Glück!
-Heutiger Auftrag: Nehme Array aus php entgegen.
-	zend_uint nt = Z_REFCOUNT_P(queries);
-
-Starte für jeden query im array einen Thread. 
-Gebe einen Array mit Ergebnis pro query aus. 
-
+Habe Performance von ps im Vergleich zu serieller ausführung getestet. War wie  erhofft für drei queries mehr als doppelt so schnell.
+Ok, neuer Auftrag.
+	1. In Do-Query: gebe einen Array mit den Reihen aus. 
+	   Lass das erst mal einen Array von floats sein - wir tun so, als wäre das immer der Ausgabetyp. 
+	   In späteren Versionen können wir den Input so verändern, dass Infos über die Datentypen der Abfrage
+	   mitgegeben werden. 
+	2. Paste diesen Ausgabearray korrekt in die Ausgabe-zvals.
+	3. Verfolge in htop, wieviele Prozesse wirklich entstehen.
 
 Denke außerdem daran, die Funktion error aus myincl rauszunehmen und für php umzuschreiben. 
+
+
+
+Long-Term-Goals:
+
+1. Abfrage beliebiger queries in parallel
+
+$queries = array(
+	array(
+		'query' => 'select * from muppets',
+		'cols' => array('int', 'string', 'string')
+	),
+	array(
+		'query' => 'select Pegelnummer, Werte_W from hnddat',
+		'cols' => array('int', 'csv')
+	)
+)
+$result = doqueries($queries);
+
+
+2. Nur ein query, beutzen C vor allem, um schneller CSV splitten zu können
+
+$query = array(
+	'query' = 'select Pegelnummer., Werte_W from hnddat',
+	'cols' = array('int', 'csv')
+);

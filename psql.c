@@ -147,7 +147,9 @@ PHP_FUNCTION(doqueries)
         array_init(return_value);
         add_assoc_long(return_value, "Hat geklappt", 1);
 
-	/* RETURN_TRUE;
+	/* Hier kein "RETURN_TRUE;", verursacht memleak!
+	   Vermute, dass return true die weitere Ausfuehrung der zend-engine abbricht,
+	   die ansonsten noch den memory fuer "return_value" freigemacht haette.
 	*/
 }
 /* }}} */
