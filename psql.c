@@ -145,11 +145,11 @@ PHP_FUNCTION(doqueries)
         }
 
         void* result;
+	char * total_out[num_threads];
 
         for(t=0; t<num_threads; t++){
                 if( pthread_join( threads[t], &result ) == -1 ) error("Thread nicht zusammengefügt");
-                long int nr = (long int)result;
-                printf("Query %ld hat %ld Reihen ausgelesen\n", t, nr);
+                total_out[t] = (char *)result;
         }
 
         mysql_library_end();

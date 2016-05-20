@@ -80,10 +80,27 @@ void* do_query(void* tp){
 	printf("Thread wird gleich folgenden Query ausführen:  %s\n", query);
 	
 	MYSQL_RES *reslt = get_result_set(conn, query, 1);
-	long int nr = (long int)mysql_num_rows(reslt);
-	
+	long int num_rows = (long int)mysql_num_rows(reslt);
+	int num_fields = mysql_num_fields(reslt);	
+
+	char * thread_out[num_rows][num_fields];
+
+	int r = 0;
+	MYSQL_ROW row;
+	while((row = mysql_fetch_row(reslt))){
+		int c;
+		for(c=0; c < num_fields; c++){
+			/* Aufgabe: gebe hier die Ergebnisse in einen Array von strings.  */
+			thread_out[r][c] = row[c];	
+			printf("%i ", strlen(row[c]));
+		}
+		r++;
+		printf("\n");
+	}
+
+
 	mysql_free_result(reslt);
 	do_disconnect(conn);
 	mysql_thread_end();
-	return (void*)(nr); 
+	return (void*) thread_out; 
 }
