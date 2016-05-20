@@ -5,13 +5,12 @@ PSQL : Short-Term-Goals:
 2. Übergebe die db-creds als persistente Parameter. MaW: sollen einmal pro Apache-Prozess von php aus
    gesetzt werden, und danach (als globals?) innerhalb des Moduls fortbestehen. 
 3. Welche Form müssen die Ausgabedaten haben?
-	3.1. Funktionen in C können keine Arrays ausgeben. Die threads übergeben anstelle dessen einen pointer zum Ergebnis. 
-	     Da das Ergebnis aber ein array ist, maW. ein pointer zum ersten Element des arrays, übergeben wir nur einen pointer zu einem pointer.
-	     Die eigentlichen Daten, weil im stack des threads, werden gelöscht. 
-	     Wir müssen darum für den array memory auf dem heap reservieren. Der zurückgegebene pointer weist dann auf den heap.
-	3.2. Eine gute Sache ist jedenfalls die: MySQL-API gibt immer strings aus, und für jede Spalte haben diese Strings immer dieselbe Länge.
-	     Wir müssen also nur die erste Zeile pro query auslesen, um zu sehen, wieviel memory wir benötigen werden. Siehe das Projekt 
-	     "pthread_sql_test" für einen Prototypen.
+3.1. Funktionen in C können keine Arrays ausgeben. Die threads übergeben anstelle dessen einen pointer zum Ergebnis. 
+     Die eigentlichen Daten, weil im stack des threads, werden gelöscht. 
+     Wir müssen darum für den array memory auf dem heap reservieren. Der zurückgegebene pointer weist dann auf den heap.
+     Was ausgegeben wird ist ein pointer zu einem 2D-Array von strings. Das wäre ein char *** cmtrx_ppp.
+3.2. Eine gute Sache ist jedenfalls die: MySQL-API gibt immer strings aus, und für jede Spalte können wir die max Länge bestimmen.
+     Wir wissen also wieviel memory wir benötigen werden. Siehe das Projekt "pthread_sql_test" für einen Prototypen.
 
 PSQL : Long-Term-Goals:
 ========================
