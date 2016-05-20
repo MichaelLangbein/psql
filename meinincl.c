@@ -74,7 +74,8 @@ void error(char *msg){
 
 void* do_query(void* tp){
 	thread_parameter * thrpar = (thread_parameter *)tp;
-	MYSQL *conn = do_connect(thrpar->host, thrpar->usr, thrpar->pw, thrpar->db, thrpar->port, thrpar->socket, thrpar->flags);
+	MYSQL *conn = do_connect(thrpar->dbcr->host, thrpar->dbcr->usr, thrpar->dbcr->pw, thrpar->dbcr->db, 
+				 thrpar->dbcr->port, thrpar->dbcr->socket, thrpar->dbcr->flags);
 	char *query = thrpar->query;
 	printf("Thread wird gleich folgenden Query ausführen:  %s\n", query);
 	

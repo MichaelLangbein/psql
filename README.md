@@ -2,9 +2,7 @@ PSQL : Short-Term-Goals:
 ========================
 
 1. Funktion error aus myincl rauszunehmen und für php umschreiben
-2. thread-parameter: mache aus allen Elementen außer dem query eine eigene Struktur (db-creds),
-   die mit pointer verlinkt wird. Auf diese Weise keine Duplikate im Memory
-3. Übergebe die db-creds als persistente Parameter. MaW: sollen einmal pro Apache-Prozess von php aus
+2. Übergebe die db-creds als persistente Parameter. MaW: sollen einmal pro Apache-Prozess von php aus
    gesetzt werden, und danach (als globals?) innerhalb des Moduls fortbestehen. 
 
 

@@ -123,18 +123,13 @@ PHP_FUNCTION(doqueries)
         unsigned int port = 0;
         char *socket = NULL;
         unsigned int flags = 0;
+	db_creds dbcr = {host, usr, pw, db, port, socket, flags};
 	thread_parameter tps[laenge_ht];
 
 	int i;
 	for(i=0; i<laenge_ht; i++){
 		tps[i].query = queries_str[i];
-		tps[i].host = host;
-		tps[i].usr = usr;
-		tps[i].pw = pw;
-		tps[i].db = db;
-		tps[i].port = port;
-		tps[i].socket = socket;
-		tps[i].flags = flags;
+		tps[i].dbcr = &dbcr;
 	}
 	
 

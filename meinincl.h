@@ -6,8 +6,8 @@
 #include <pthread.h>
 #include <mysql.h>
 
-typedef struct {
-	char *query;
+
+typedef struct db_creds {
 	char *host;
         char *usr;
         char *pw;
@@ -15,6 +15,12 @@ typedef struct {
         unsigned int port;
         char *socket;
         unsigned int flags;
+} db_creds;
+
+
+typedef struct thread_parameter {
+	char *query;
+	db_creds *  dbcr;
 } thread_parameter;
 
 
