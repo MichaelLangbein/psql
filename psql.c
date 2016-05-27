@@ -67,11 +67,7 @@ PHP_FUNCTION(confirm_psql_compiled)
 	RETURN_STRINGL(strg, len, 0);
 }
 /* }}} */
-/* The previous line is meant for vim and emacs, so it can correctly fold and 
-   unfold functions in source code. See the corresponding marks just before 
-   function definition, where the functions purpose is also documented. Please 
-   follow this convention for the convenience of others editing your code.
-*/
+
 
 /* {{{ proto array doqueries(array queries)
    Nimmt einen array von sql-queries und führt diese in parallel aus. */
@@ -123,36 +119,54 @@ PHP_FUNCTION(doqueries)
         unsigned int port = 0;
         char *socket = NULL;
         unsigned int flags = 0;
-	db_creds dbcr = {host, usr, pw, db, port, socket, flags};
-	thread_parameter tps[laenge_ht];
 
+    /* Eingangsdaten für die Threads. Jeder bekommt selbe DB-Credentials, aber eigenen query.  */
+    db_creds dbcr = {host, usr, pw, db, port, socket, flags};
+    csv_parameter csvp = {1, 3, 2};
+    thread_parameter tps[num_queries];
 	int i;
-	for(i=0; i<laenge_ht; i++){
-		tps[i].query = queries_str[i];
+	for(i = 0; i<num_queries; i++){
+		tps[i].query = queries[i];
 		tps[i].dbcr = &dbcr;
+		tps[i].csv = &csvp;
 	}
 	
 
-	if(mysql_library_init(0, NULL, NULL)){
-                php_printf("Oh-oh... mysql_library_init hat nicht funktioniert.");
-		RETURN_FALSE;
-        }
-	int num_threads = laenge_ht;
-	pthread_t threads[num_threads];
-        long t;
-        for(t=0; t<num_threads; t++){
-                if( pthread_create( &threads[t], NULL, do_query, (void*)&tps[t] ) == -1 ) error("Thread nicht erstellt");
-        }
+    if(mysql_library_init(0, NULL, NULL)) error("Konnte mysql_lib nicht initialisieren.");
+        
+	/* Verteilen der Eingangsdaten auf die Threads */
+    int num_threads = num_queries;
+    pthread_t threads[num_threads];
+	int t;
+    for(t=0; t<num_threads; t++){
+            if( pthread_create( &threads[t], NULL, do_query, (void*)&tps[t] ) == -1 ) error("Thread nicht erstellt");
+    }
 
-        void* result;
-	char * total_out[num_threads];
+    void * result;
+    char **** all_data[num_threads];
 
-        for(t=0; t<num_threads; t++){
-                if( pthread_join( threads[t], &result ) == -1 ) error("Thread nicht zusammengefügt");
-                total_out[t] = (char *)result;
-        }
+	/* Hole die Ergebnisse der Threads. pthread_join liefert uns nur einen Pointer zum Ergebnis.
+	   Innerhalb des threads haben wir aber glücklicherweise die Werte des Ergebnisses auf dem Heap gespeichert. 
+	   Vergiss nur nicht, den Heap nach Bearbeitung der Ergebnisse auch wieder frei zu machen. 
+	 */
+    for(t=0; t<num_threads; t++){
+        /* Here, (void*)thread_out is being saved to void ** result.  */
+    	if( pthread_join( threads[t], &result ) == -1 ) error("Thread nicht zusammengefügt");
+    	all_data[t] = (char ****)result;
+    }
 
-        mysql_library_end();
+    mysql_library_end();
+
+	for(t=0; t<num_threads; t++){
+		printNullTerm3DCmtrx(all_data[t]);
+	}
+
+	/* Jeder thread hat sein Ergebnis auf dem Heap gespeichert, damit es nach Ende des threads nicht 
+	   verloren geht. Jetzt müssen wir also den Heap wieder frei machen. 
+	 */
+	for(t=0; t<num_threads; t++){
+		freeNullTerm3DCmtrx(all_data[t]);
+	}
 
 
 
