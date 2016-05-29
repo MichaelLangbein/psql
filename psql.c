@@ -77,7 +77,7 @@ PHP_FUNCTION(doqueries)
 	zval * queriesdata = NULL;
 	zval * dbcreds = NULL;
 
-	if (zend_parse_parameters(argc TSRMLS_CC, "aa", &queriesdata, &dbcreds) == FAILURE) return;
+	if (zend_parse_parameters(argc TSRMLS_CC, "aa", &dbcreds, &queriesdata) == FAILURE) return;
 
 	/* SCHRITT 1: PHP-Input zu c-array
 	 In PHP sind alle variablen erst einmal zvals, eine union hinter der mehrere Datentypen liegen koennen.
@@ -120,7 +120,7 @@ PHP_FUNCTION(doqueries)
 
 
 	HashTable * dbcreds_ht = Z_ARRVAL_P(dbcreds);
-	if (zend_has_index_find(querydata_ht, "dbcreds", (void **) &dbcreds_ht) == FAILURE) { RETURN_NULL();}
+	if (zend_has_index_find(queriesdata, "dbcreds", (void **) &dbcreds_ht) == FAILURE) { RETURN_NULL();}
 
 	char * host, usr, pw, db;
 	if (zend_has_index_find(dbcreds_ht, "host", (void **) &host) == FAILURE) { RETURN_NULL();}
@@ -167,23 +167,17 @@ PHP_FUNCTION(doqueries)
 	 */
 	for (t = 0; t < num_threads; t++) {
 		/* Here, (void*)thread_out is being saved to void ** result.  */
-		if (pthread_join(threads[t], &result) == -1)
-			error("Thread nicht zusammengefügt");
+		if (pthread_join(threads[t], &result) == -1) error("Thread nicht zusammengefügt");
 		all_data[t] = (char ****) result;
 	}
 
 	mysql_library_end();
 
-	for (t = 0; t < num_threads; t++) {
-		printNullTerm3DCmtrx(all_data[t]);
-	}
+//	for (t = 0; t < num_threads; t++) {
+//		printNullTerm3DCmtrx(all_data[t]);
+//	}
 
-	/* Jeder thread hat sein Ergebnis auf dem Heap gespeichert, damit es nach Ende des threads nicht 
-	 verloren geht. Jetzt müssen wir also den Heap wieder frei machen.
-	 */
-	for (t = 0; t < num_threads; t++) {
-		freeNullTerm3DCmtrx(all_data[t]);
-	}
+
 
 	/*SCHRITT 3: c-array zu PHP-Output
 	 Wir bereiten schon mal den return value vor
@@ -192,7 +186,40 @@ PHP_FUNCTION(doqueries)
 	 Und dieser wiederum wird befuellt mit den Ergebnissen, die wir aus unserem Modul geholt haben.
 	 */
 	array_init(return_value);
-	add_assoc_long(return_value, "Hat geklappt", 1);
+	for(i=0; i<num_queries; i++){
+
+		char **** query_result = all_data[i];
+		zval * query_result_zv;
+		int r = 0;
+		int rr = 0;
+		while(query_result[r] != NULL){
+
+			int d = 0;
+			while(query_result[r][d] != NULL){
+
+				zval * row_result_zv;
+				int c = 0;
+				while(query_result[r][d][c] != NULL){
+					add_next_index_string(row_result_zv, query_result[r][d][c], 1);
+					c++;
+				}
+
+				add_next_index_zval(query_result_zv, row_result_zv);
+				rr++;
+				d++;
+			}
+			r++;
+		}
+
+		add_assoc_zval(return_value, i, query_result_zv);
+	}
+
+	/* Jeder thread hat sein Ergebnis auf dem Heap gespeichert, damit es nach Ende des threads nicht
+	 verloren geht. Jetzt müssen wir also den Heap wieder frei machen.
+	 */
+	for (t = 0; t < num_threads; t++) {
+		freeNullTerm3DCmtrx(all_data[t]);
+	}
 
 	/* Hier kein "RETURN_TRUE;", verursacht memleak!
 	 Vermute, dass return true die weitere Ausfuehrung der zend-engine abbricht,

@@ -1,5 +1,5 @@
-#define _XOPEN_SOURCE // for mktime, gmtime, strptime, strftime
-#define _GNU_SOURCE // for sched_getcpu
+// Bereits in zend_engine definiert . #define _XOPEN_SOURCE // for mktime, gmtime, strptime, strftime
+// Bereits in zend_engine definiert . #define _GNU_SOURCE // for sched_getcpu
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
