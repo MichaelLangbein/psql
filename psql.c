@@ -74,115 +74,130 @@ PHP_FUNCTION(confirm_psql_compiled)
 PHP_FUNCTION(doqueries)
 {
 	int argc = ZEND_NUM_ARGS();
-	zval *queries = NULL;
+	zval * queriesdata = NULL;
+	zval * dbcreds = NULL;
 
-	if (zend_parse_parameters(argc TSRMLS_CC, "a", &queries) == FAILURE) 
-		return;
+	if (zend_parse_parameters(argc TSRMLS_CC, "aa", &queriesdata, &dbcreds) == FAILURE) return;
 
-
-        
-
-	
 	/* SCHRITT 1: PHP-Input zu c-array
-	   In PHP sind alle variablen erst einmal zvals, eine union hinter der mehrere Datentypen liegen koennen.
-	   In unserem Fall wissen wir, dass der hinterliegende Datentyp ein HashTable ist. 
-	   Aus diesem holen wir schliesslich die strings, die in den Hash-vals liegen. 
-	   Damit haben wir endlich einen blanken c-array von strings bekommen. 
-	*/
+	 In PHP sind alle variablen erst einmal zvals, eine union hinter der mehrere Datentypen liegen koennen.
+	 In unserem Fall wissen wir, dass der hinterliegende Datentyp ein HashTable ist.
+	 Aus diesem holen wir schliesslich die strings, die in den Hash-vals liegen.
+	 Damit haben wir endlich einen blanken c-array von strings bekommen.
+	 */
 	int laenge_ht = 0;
-	char *queries_str[10];
+	char * queries_str[10];
+	csv_parameter queries_csv[10];
 
-	HashTable *queries_ht = Z_ARRVAL_P(queries);
+	HashTable * queriesdata_ht = Z_ARRVAL_P(queriesdata);
 	HashPosition position;
-	zval **data = NULL;
-	for(
-	zend_hash_internal_pointer_reset_ex(queries_ht, &position);
-	zend_hash_get_current_data_ex(queries_ht, (void**) &data, &position) == SUCCESS;
-	zend_hash_move_forward_ex(queries_ht, &position)
-	){
-		char * query = Z_STRVAL_PP(data);
+	zval ** querydata = NULL;
+	for (	zend_hash_internal_pointer_reset_ex(queriesdata_ht, &position);
+			zend_hash_get_current_data_ex(queriesdata_ht, (void**) &querydata, &position) == SUCCESS;
+			zend_hash_move_forward_ex(queriesdata_ht, &position)) {
+
+
+
+		HashTable * querydata_ht = Z_ARRVAL_P(querydata);
+
+		char * query;
+		if (zend_has_index_find(querydata_ht, "query", (void **) &query) == FAILURE) { RETURN_NULL();}
 		queries_str[laenge_ht] = query;
+
+		HashTable * csvdata_ht;
+		if (zend_has_index_find(querydata_ht, "csvdata", (void **) &csvdata_ht) == FAILURE) { RETURN_NULL();}
+
+		int csvcol, discrcol, datecol;
+		if (zend_has_index_find(csvdata_ht, "csv", (void **) &csvcol) == FAILURE) { RETURN_NULL();}
+		if (zend_has_index_find(csvdata_ht, "discr", (void **) &discrcol) == FAILURE) { RETURN_NULL();}
+		if (zend_has_index_find(csvdata_ht, "date", (void **) &datecol) == FAILURE) { RETURN_NULL();}
+
+		csv_parameter csvp = {csvcol, datecol, discrcol};
+		queries_csv[laenge_ht] = csvp;
+
 		laenge_ht++;
-		printf("Wir haben erfolgreich den Eingangsstring %s ausgelesen.\n", query);
 	}
 
 
+	HashTable * dbcreds_ht = Z_ARRVAL_P(dbcreds);
+	if (zend_has_index_find(querydata_ht, "dbcreds", (void **) &dbcreds_ht) == FAILURE) { RETURN_NULL();}
+
+	char * host, usr, pw, db;
+	if (zend_has_index_find(dbcreds_ht, "host", (void **) &host) == FAILURE) { RETURN_NULL();}
+	if (zend_has_index_find(dbcreds_ht, "usr", (void **) &usr) == FAILURE) { RETURN_NULL();}
+	if (zend_has_index_find(dbcreds_ht, "pw", (void **) &pw) == FAILURE) { RETURN_NULL();}
+	if (zend_has_index_find(dbcreds_ht, "db", (void **) &db) == FAILURE) { RETURN_NULL();}
+	unsigned int port = 0;
+	char *socket = NULL;
+	unsigned int flags = 0;
+	db_creds dbcr = { host, usr, pw, db, port, socket, flags };
 
 	/* SCHRITT 2: Verarbeiten der Daten; c-array zu c-array
-	   Hier beginnt die eigentliche Arbeit. 
-	*/
+	 Hier beginnt die eigentliche Arbeit.
+	 */
 
- 	char *host = "localhost";
-        char *usr = "root";
-        char *pw = "rinso86";
-        char *db = "hnddat";
-        unsigned int port = 0;
-        char *socket = NULL;
-        unsigned int flags = 0;
-
-    /* Eingangsdaten für die Threads. Jeder bekommt selbe DB-Credentials, aber eigenen query.  */
-    db_creds dbcr = {host, usr, pw, db, port, socket, flags};
-    csv_parameter csvp = {1, 3, 2};
-    thread_parameter tps[num_queries];
+	/* Eingangsdaten für die Threads. Jeder bekommt selbe DB-Credentials, aber eigenen query.  */
+	int num_queries = laenge_ht;
+	thread_parameter tps[num_queries];
 	int i;
-	for(i = 0; i<num_queries; i++){
-		tps[i].query = queries[i];
+	for (i = 0; i < num_queries; i++) {
+		tps[i].query = queries_str[i];
 		tps[i].dbcr = &dbcr;
-		tps[i].csv = &csvp;
+		tps[i].csv = &queries_csv[i];
 	}
-	
 
-    if(mysql_library_init(0, NULL, NULL)) error("Konnte mysql_lib nicht initialisieren.");
-        
+	if (mysql_library_init(0, NULL, NULL))
+		error("Konnte mysql_lib nicht initialisieren.");
+
 	/* Verteilen der Eingangsdaten auf die Threads */
-    int num_threads = num_queries;
-    pthread_t threads[num_threads];
+	int num_threads = num_queries;
+	pthread_t threads[num_threads];
 	int t;
-    for(t=0; t<num_threads; t++){
-            if( pthread_create( &threads[t], NULL, do_query, (void*)&tps[t] ) == -1 ) error("Thread nicht erstellt");
-    }
+	for (t = 0; t < num_threads; t++) {
+		if (pthread_create(&threads[t], NULL, do_query, (void*) &tps[t]) == -1)
+			error("Thread nicht erstellt");
+	}
 
-    void * result;
-    char **** all_data[num_threads];
+	void * result;
+	char **** all_data[num_threads];
 
 	/* Hole die Ergebnisse der Threads. pthread_join liefert uns nur einen Pointer zum Ergebnis.
-	   Innerhalb des threads haben wir aber glücklicherweise die Werte des Ergebnisses auf dem Heap gespeichert. 
-	   Vergiss nur nicht, den Heap nach Bearbeitung der Ergebnisse auch wieder frei zu machen. 
+	 Innerhalb des threads haben wir aber glücklicherweise die Werte des Ergebnisses auf dem Heap gespeichert.
+	 Vergiss nur nicht, den Heap nach Bearbeitung der Ergebnisse auch wieder frei zu machen.
 	 */
-    for(t=0; t<num_threads; t++){
-        /* Here, (void*)thread_out is being saved to void ** result.  */
-    	if( pthread_join( threads[t], &result ) == -1 ) error("Thread nicht zusammengefügt");
-    	all_data[t] = (char ****)result;
-    }
+	for (t = 0; t < num_threads; t++) {
+		/* Here, (void*)thread_out is being saved to void ** result.  */
+		if (pthread_join(threads[t], &result) == -1)
+			error("Thread nicht zusammengefügt");
+		all_data[t] = (char ****) result;
+	}
 
-    mysql_library_end();
+	mysql_library_end();
 
-	for(t=0; t<num_threads; t++){
+	for (t = 0; t < num_threads; t++) {
 		printNullTerm3DCmtrx(all_data[t]);
 	}
 
 	/* Jeder thread hat sein Ergebnis auf dem Heap gespeichert, damit es nach Ende des threads nicht 
-	   verloren geht. Jetzt müssen wir also den Heap wieder frei machen. 
+	 verloren geht. Jetzt müssen wir also den Heap wieder frei machen.
 	 */
-	for(t=0; t<num_threads; t++){
+	for (t = 0; t < num_threads; t++) {
 		freeNullTerm3DCmtrx(all_data[t]);
 	}
 
-
-
-        /*SCHRITT 3: c-array zu PHP-Output
- 	  Wir bereiten schon mal den return value vor 
-	  Was hier passiert ist folgendes: 
-	  Der zval "return_value" bekommt den zu grunde liegenden Datentyp "HashTable".
-	  Und dieser wiederum wird befuellt mit den Ergebnissen, die wir aus unserem Modul geholt haben. 
-	*/
-        array_init(return_value);
-        add_assoc_long(return_value, "Hat geklappt", 1);
+	/*SCHRITT 3: c-array zu PHP-Output
+	 Wir bereiten schon mal den return value vor
+	 Was hier passiert ist folgendes:
+	 Der zval "return_value" bekommt den zu grunde liegenden Datentyp "HashTable".
+	 Und dieser wiederum wird befuellt mit den Ergebnissen, die wir aus unserem Modul geholt haben.
+	 */
+	array_init(return_value);
+	add_assoc_long(return_value, "Hat geklappt", 1);
 
 	/* Hier kein "RETURN_TRUE;", verursacht memleak!
-	   Vermute, dass return true die weitere Ausfuehrung der zend-engine abbricht,
-	   die ansonsten noch den memory fuer "return_value" freigemacht haette.
-	*/
+	 Vermute, dass return true die weitere Ausfuehrung der zend-engine abbricht,
+	 die ansonsten noch den memory fuer "return_value" freigemacht haette.
+	 */
 }
 /* }}} */
 
