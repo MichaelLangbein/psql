@@ -2,15 +2,11 @@ PSQL : Short-Term-Goals:
 ========================
 
 1. Funktion error aus myincl rauszunehmen und für php umschreiben
-2. Übergebe die db-creds als persistente Parameter. MaW: sollen einmal pro Apache-Prozess von php aus
+2. Versichere, dass wechsel von malloc zu emalloc gut geklappt hat. 
+3. Übergebe die db-creds als persistente Parameter. MaW: sollen einmal pro Apache-Prozess von php aus
    gesetzt werden, und danach (als globals?) innerhalb des Moduls fortbestehen. 
-3. Welche Form müssen die Ausgabedaten haben?
-3.1. Funktionen in C können keine Arrays ausgeben. Die threads übergeben anstelle dessen einen pointer zum Ergebnis. 
-     Die eigentlichen Daten, weil im stack des threads, werden gelöscht. 
-     Wir müssen darum für den array memory auf dem heap reservieren. Der zurückgegebene pointer weist dann auf den heap.
-     Was ausgegeben wird ist ein pointer zu einem 2D-Array von strings. Das wäre ein char *** cmtrx_ppp.
-3.2. Eine gute Sache ist jedenfalls die: MySQL-API gibt immer strings aus, und für jede Spalte können wir die max Länge bestimmen.
-     Wir wissen also wieviel memory wir benötigen werden. Siehe das Projekt "pthread_sql_test" für einen Prototypen.
+4. Zend-Engine erwartet immer noch nur einen Eingangsparameter, mit den dbcreds haben wir aber 2. Wo kann man das anpassen?
+
 
 PSQL : Long-Term-Goals:
 ========================
@@ -18,20 +14,43 @@ PSQL : Long-Term-Goals:
 1. Abfrage beliebiger queries in parallel
 -----------------------------------------
 
+	$dbcreds = array(
+		"host" => "localhost",
+		"usr" => "root",
+		"pw" => "rinso86",
+		"db" => "hnddat"
+	);
+	
 	$queries = array(
-       		array(
-                	'query' => 'select * from muppets',
-                	'cols' => array('int', 'string', 'string')
-        		),
-        	array(
-                	'query' => 'select Pegelnummer, Werte_W from hnddat',
-                	'cols' => array('int', 'csv')
-        	)
-	)
-	$result = doqueries($queries);
+		array(
+				"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10043708  LIMIT 100",
+				"csvdata" => array(
+					"csv" => 1, 
+					"discr" => 2, 
+					"date" => 3 
+				)
+		),
+		array(
+			"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10043708  LIMIT 100",
+			"csvdata" => array(
+				"csv" => 1, 
+				"discr" => 2, 
+				"date" => 3 
+			)
+		),
+		array(
+			"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10043708  LIMIT 100",
+			"csvdata" => array(
+				"csv" => 1, 
+				"discr" => 2, 
+				"date" => 3 
+			)
+		)
+	);
+	
+	$result = doqueries(dbcreds, $queries);
+	var_dump($result);
 
-Anmerkung: 'csv' ist natürlich kein Datentyp. Viel mehr soll das Modul die mit 'csv' markierte Spalte
-erkennen und in Reihen aufsplitten. 
 
 
 2. Nur ein query, beutzen C vor allem, um schneller CSV splitten zu können
@@ -39,6 +58,10 @@ erkennen und in Reihen aufsplitten.
 
 	$query = array(
         	'query' = 'select Pegelnummer., Werte_W from hnddat',
-	        'cols' = array('int', 'csv')
+	        "csvdata" => array(
+				"csv" => 1, 
+				"discr" => 2, 
+				"date" => 3 
+			)
 	);
 

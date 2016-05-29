@@ -80,10 +80,10 @@ int ** nullTermMtrx(){
 	int M = 3;
 	int n, m;
 
-	int ** mtrx_pp = (int **)malloc((N + 1) * sizeof(int *));
+	int ** mtrx_pp = (int **)emalloc((N + 1) * sizeof(int *));
 
 	for (n = 0; n < N; n++) {
-		mtrx_pp[n] = (int *)malloc((M + 1) * sizeof(int));
+		mtrx_pp[n] = (int *)emalloc((M + 1) * sizeof(int));
 		for (m = 0; m < M; m++) {
 			mtrx_pp[n][m] = n*M + m + 1;
 		}
@@ -137,12 +137,12 @@ char *** nullTermCmtrx(){
 	int n, m;
 	char * txt = "hallo";
 
-	char *** cmtrx_ppp = (char ***)malloc((N + 1) * sizeof(char **));
+	char *** cmtrx_ppp = (char ***)emalloc((N + 1) * sizeof(char **));
 
 	for (n = 0; n < N; n++) {
-		cmtrx_ppp[n] = (char **)malloc((M + 1) * sizeof(char *));
+		cmtrx_ppp[n] = (char **)emalloc((M + 1) * sizeof(char *));
 		for (m = 0; m < M; m++) {
-			cmtrx_ppp[n][m] = (char *)malloc((strlen(txt) + 1) * sizeof(char));
+			cmtrx_ppp[n][m] = (char *)emalloc((strlen(txt) + 1) * sizeof(char));
 			strcpy(cmtrx_ppp[n][m], txt);
 		}
 		cmtrx_ppp[n][M] = NULL;
@@ -311,7 +311,7 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 	char datetime_arr[18];
 
 
-	char **** cmtrx_pppp = (char ****)malloc((num_rows + 1) * sizeof(char ***));
+	char **** cmtrx_pppp = (char ****)emalloc((num_rows + 1) * sizeof(char ***));
 
 	for (r = 0; r < num_rows; r++) {
 		row = mysql_fetch_row(reslt);
@@ -322,27 +322,27 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 		date_tstp = getTstp(date, "%Y-%m-%d");
 
 		num_steps = 1440 / discr;
-		cmtrx_pppp[r] = (char ***)malloc((num_steps + 1) * sizeof(char **));
+		cmtrx_pppp[r] = (char ***)emalloc((num_steps + 1) * sizeof(char **));
 
 		for (d = 0; d < num_steps; d++) {
 
 			entry = csvstring;
 			csvstring = cutOffToken(csvstring, ";");
-			cmtrx_pppp[r][d] = (char **)malloc( (1 + num_cols) * sizeof(char *) );
+			cmtrx_pppp[r][d] = (char **)emalloc( (1 + num_cols) * sizeof(char *) );
 
 			for(c = 0; c<num_cols; c++){
 				if(c == csv->csvcol){
-					cmtrx_pppp[r][d][c] = (char *)malloc( (strlen(entry) + 1) * sizeof(char) );
+					cmtrx_pppp[r][d][c] = (char *)emalloc( (strlen(entry) + 1) * sizeof(char) );
 					strcpy( cmtrx_pppp[r][d][c], entry );
 				}
 				else if(c == csv->datecol){
 					datetime = getDate(date_tstp, d*discr*60);
 					strcpy( datetime_arr, datetime);
-					cmtrx_pppp[r][d][c] = (char *)malloc( (strlen(datetime) + 1) * sizeof(char) );
+					cmtrx_pppp[r][d][c] = (char *)emalloc( (strlen(datetime) + 1) * sizeof(char) );
 					strcpy( cmtrx_pppp[r][d][c], datetime_arr );
 				}
 				else{
-					cmtrx_pppp[r][d][c] = (char *)malloc( (strlen(row[c]) + 1) * sizeof(char) );
+					cmtrx_pppp[r][d][c] = (char *)emalloc( (strlen(row[c]) + 1) * sizeof(char) );
 					strcpy( cmtrx_pppp[r][d][c], row[c] );
 				}
 			}
