@@ -88,29 +88,36 @@ PHP_FUNCTION(doqueries)
 	int laenge_ht = 0;
 	char * queries_str[10];
 	csv_parameter queries_csv[10];
+	char * queries_indices[10];
 
 	HashTable * queriesdata_ht = Z_ARRVAL_P(queriesdata);
 	HashPosition position;
-	zval ** querydata = NULL;
+	zval * querydata = NULL;
 	for (	zend_hash_internal_pointer_reset_ex(queriesdata_ht, &position);
 			zend_hash_get_current_data_ex(queriesdata_ht, (void**) &querydata, &position) == SUCCESS;
 			zend_hash_move_forward_ex(queriesdata_ht, &position)) {
 
+		char * string_key = NULL;
+		ulong num_key;
+		zend_bool duplicate = 0;
+		zend_hash_get_current_key(queriesdata_ht, &string_key, &num_key, duplicate);
+		queries_indices[laenge_ht] = string_key;
 
 
 		HashTable * querydata_ht = Z_ARRVAL_P(querydata);
 
 		char * query;
-		if (zend_has_index_find(querydata_ht, "query", (void **) &query) == FAILURE) { RETURN_NULL();}
+		if (zend_hash_find(querydata_ht, "query", 6, (void **) &query)) { RETURN_NULL();}
 		queries_str[laenge_ht] = query;
 
-		HashTable * csvdata_ht;
-		if (zend_has_index_find(querydata_ht, "csvdata", (void **) &csvdata_ht) == FAILURE) { RETURN_NULL();}
+		zval * csvdata_zv;
+		if (zend_hash_find(querydata_ht, "csvdata", 8, (void **) &csvdata_zv)) { RETURN_NULL();}
+		HashTable * csvdata_ht = Z_ARRVAL_P(csvdata_zv);
 
 		int csvcol, discrcol, datecol;
-		if (zend_has_index_find(csvdata_ht, "csv", (void **) &csvcol) == FAILURE) { RETURN_NULL();}
-		if (zend_has_index_find(csvdata_ht, "discr", (void **) &discrcol) == FAILURE) { RETURN_NULL();}
-		if (zend_has_index_find(csvdata_ht, "date", (void **) &datecol) == FAILURE) { RETURN_NULL();}
+		if (zend_hash_find(csvdata_ht, "csv", 4, (void **) &csvcol)) { RETURN_NULL();}
+		if (zend_hash_find(csvdata_ht, "discr", 6,  (void **) &discrcol)) { RETURN_NULL();}
+		if (zend_hash_find(csvdata_ht, "date", 5, (void **) &datecol)) { RETURN_NULL();}
 
 		csv_parameter csvp = {csvcol, datecol, discrcol};
 		queries_csv[laenge_ht] = csvp;
@@ -120,17 +127,26 @@ PHP_FUNCTION(doqueries)
 
 
 	HashTable * dbcreds_ht = Z_ARRVAL_P(dbcreds);
-	if (zend_has_index_find(queriesdata, "dbcreds", (void **) &dbcreds_ht) == FAILURE) { RETURN_NULL();}
+	if (zend_hash_find(queriesdata_ht, "dbcreds", 8, (void **) dbcreds_ht)) { RETURN_NULL();}
 
-	char * host, usr, pw, db;
-	if (zend_has_index_find(dbcreds_ht, "host", (void **) &host) == FAILURE) { RETURN_NULL();}
-	if (zend_has_index_find(dbcreds_ht, "usr", (void **) &usr) == FAILURE) { RETURN_NULL();}
-	if (zend_has_index_find(dbcreds_ht, "pw", (void **) &pw) == FAILURE) { RETURN_NULL();}
-	if (zend_has_index_find(dbcreds_ht, "db", (void **) &db) == FAILURE) { RETURN_NULL();}
+
+	void ** host;
+	void **usr;
+	void **pw;
+	void ** db;
+	if(zend_hash_find(dbcreds_ht, "host", 5, host)){ RETURN_NULL();}
+	if(zend_hash_find(dbcreds_ht, "usr", 4, host)){ RETURN_NULL();}
+	if(zend_hash_find(dbcreds_ht, "pw", 3, host)){ RETURN_NULL();}
+	if(zend_hash_find(dbcreds_ht, "db", 3, host)){ RETURN_NULL();}
+
+//	if (zend_has_index_find(dbcreds_ht, "host", (void **) &host) == FAILURE) { RETURN_NULL();}
+//	if (zend_has_index_find(dbcreds_ht, "usr", (void **) &usr) == FAILURE) { RETURN_NULL();}
+//	if (zend_has_index_find(dbcreds_ht, "pw", (void **) &pw) == FAILURE) { RETURN_NULL();}
+//	if (zend_has_index_find(dbcreds_ht, "db", (void **) &db) == FAILURE) { RETURN_NULL();}
 	unsigned int port = 0;
 	char *socket = NULL;
 	unsigned int flags = 0;
-	db_creds dbcr = { host, usr, pw, db, port, socket, flags };
+	db_creds dbcr = { (char *)*host, (char *)*usr, (char *)*pw, (char *)*db, port, socket, flags };
 
 	/* SCHRITT 2: Verarbeiten der Daten; c-array zu c-array
 	 Hier beginnt die eigentliche Arbeit.
@@ -189,7 +205,11 @@ PHP_FUNCTION(doqueries)
 	for(i=0; i<num_queries; i++){
 
 		char **** query_result = all_data[i];
+
 		zval * query_result_zv;
+		ALLOC_INIT_ZVAL(query_result_zv);
+		array_init(query_result_zv);
+
 		int r = 0;
 		int rr = 0;
 		while(query_result[r] != NULL){
@@ -211,7 +231,8 @@ PHP_FUNCTION(doqueries)
 			r++;
 		}
 
-		add_assoc_zval(return_value, i, query_result_zv);
+
+		add_assoc_zval(return_value, queries_indices[i], query_result_zv);
 	}
 
 	/* Jeder thread hat sein Ergebnis auf dem Heap gespeichert, damit es nach Ende des threads nicht

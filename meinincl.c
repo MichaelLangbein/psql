@@ -1,4 +1,4 @@
-#include "incl.h"
+#include "meinincl.h"
 
 MYSQL* do_connect(char *host, char *usr, char *pw, char *db, unsigned int port, char *socket, unsigned int flags){
 
@@ -75,128 +75,6 @@ void error(char * message){
 
 
 
-int ** nullTermMtrx(){
-	int N = 5;
-	int M = 3;
-	int n, m;
-
-	int ** mtrx_pp = (int **)emalloc((N + 1) * sizeof(int *));
-
-	for (n = 0; n < N; n++) {
-		mtrx_pp[n] = (int *)emalloc((M + 1) * sizeof(int));
-		for (m = 0; m < M; m++) {
-			mtrx_pp[n][m] = n*M + m + 1;
-		}
-		mtrx_pp[n][M] = 0;
-	}
-	mtrx_pp[N] = NULL;
-
-	return mtrx_pp;
-}
-
-
-void printNullTermMtrx(int ** mtrx_pp){
-	int * mtrx_p;
-	int mtrx;
-	int n;
-	int m;
-
-	n = 0;
-	while(mtrx_pp[n] != NULL){
-		mtrx_p = mtrx_pp[n];
-
-		m = 0;
-		while(mtrx_p[m] != 0){
-			mtrx = mtrx_p[m];
-			printf("%i ", mtrx);
-			m++;
-		}
-		printf("\n");
-		n++;
-	}
-}
-
-
-void freeNullTermMtrx(int ** mtrx_pp){
-	int * mtrx_p;
-	int n;
-
-	n = 0;
-	while(mtrx_pp[n] != NULL){
-		mtrx_p = mtrx_pp[n];
-		free(mtrx_p);
-		n++;
-	}
-	free(mtrx_pp);
-}
-
-
-char *** nullTermCmtrx(){
-	int N = 3;
-	int M = 2;
-	int n, m;
-	char * txt = "hallo";
-
-	char *** cmtrx_ppp = (char ***)emalloc((N + 1) * sizeof(char **));
-
-	for (n = 0; n < N; n++) {
-		cmtrx_ppp[n] = (char **)emalloc((M + 1) * sizeof(char *));
-		for (m = 0; m < M; m++) {
-			cmtrx_ppp[n][m] = (char *)emalloc((strlen(txt) + 1) * sizeof(char));
-			strcpy(cmtrx_ppp[n][m], txt);
-		}
-		cmtrx_ppp[n][M] = NULL;
-	}
-	cmtrx_ppp[N] = NULL;
-
-	return cmtrx_ppp;
-}
-
-
-void printNullTermCmtrx(char *** cmtrx_ppp){
-	char ** cmtrx_pp;
-	char * cmtrx_p;
-	int n;
-	int m;
-
-	n = 0;
-	while(cmtrx_ppp[n] != NULL){
-		cmtrx_pp = cmtrx_ppp[n];
-
-		m = 0;
-		while(cmtrx_pp[m] != NULL){
-			cmtrx_p = cmtrx_pp[m];
-			printf("%s ", cmtrx_p);
-			m++;
-		}
-		printf("\n");
-		n++;
-	}
-}
-
-
-void freeNullTermCmtrx(char *** cmtrx_ppp){
-	char ** cmtrx_pp;
-	char * cmtrx_p;
-	int n, m;
-
-	n = 0;
-	while(cmtrx_ppp[n] != NULL){
-		cmtrx_pp = cmtrx_ppp[n];
-
-		m=0;
-		while(cmtrx_pp[m] != NULL){
-			cmtrx_p = cmtrx_pp[m];
-			free(cmtrx_p);
-			m++;
-		}
-		free(cmtrx_pp);
-		n++;
-	}
-	free(cmtrx_ppp);
-}
-
-
 void printNullTerm3DCmtrx(char **** cmtrx_pppp){
 	char *** cmtrx_ppp;
 	char ** cmtrx_pp;
@@ -241,19 +119,19 @@ void freeNullTerm3DCmtrx(char **** cmtrx_pppp){
 			l=0;  // for each column ...
 			while(cmtrx_pp[l] != NULL){
 				cmtrx_p = cmtrx_pp[l];
-				free(cmtrx_p);
+				efree(cmtrx_p);
 				l++;
 			}  // ... end for each column
-			//free(cmtrx_pp[l]);
-			free(cmtrx_pp);
+			//efree(cmtrx_pp[l]);
+			efree(cmtrx_pp);
 			m++;
 		}   // ... end for each csv element
-		//free(cmtrx_ppp[m]);
-		free(cmtrx_ppp);
+		//efree(cmtrx_ppp[m]);
+		efree(cmtrx_ppp);
 		n++;
 	}   // ... end for each mysql-result line
-	//free(cmtrx_pppp[n]);
-	free(cmtrx_pppp);
+	//efree(cmtrx_pppp[n]);
+	efree(cmtrx_pppp);
 }
 
 

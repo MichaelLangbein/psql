@@ -7,7 +7,7 @@ $dbcreds = array(
 );
 
 $queries = array(
-	array(
+	"a" => array(
 			"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10043708  LIMIT 100",
 			"csvdata" => array(
 				"csv" => 1, 
@@ -15,7 +15,7 @@ $queries = array(
 				"date" => 3 
 			)
 	),
-	array(
+	"b" => array(
 		"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10043708  LIMIT 100",
 		"csvdata" => array(
 			"csv" => 1, 
@@ -23,7 +23,7 @@ $queries = array(
 			"date" => 3 
 		)
 	),
-	array(
+	"c" => array(
 		"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10043708  LIMIT 100",
 		"csvdata" => array(
 			"csv" => 1, 
@@ -33,6 +33,6 @@ $queries = array(
 	)
 );
 
-$result = doqueries(dbcreds, $queries);
+$result = doqueries($dbcreds, $queries);
 var_dump($result);
 ?>
