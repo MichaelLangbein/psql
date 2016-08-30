@@ -1,8 +1,8 @@
 <?php
 $dbcreds = array(
 	"host" => "localhost",
-	"usr" => "root",
-	"pw" => "rinso86",
+	"usr" => "hnd",
+	"pw" => "123shnd4",
 	"db" => "hnddat"
 );
 
@@ -16,7 +16,7 @@ $queries = array(
 			)
 	),
 	"b" => array(
-		"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10043708  LIMIT 100",
+		"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10053009  LIMIT 100",
 		"csvdata" => array(
 			"csv" => 1, 
 			"discr" => 2, 
@@ -24,7 +24,7 @@ $queries = array(
 		)
 	),
 	"c" => array(
-		"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10043708  LIMIT 100",
+		"query" => " select a.Pegelnummer, a.Werte_W, a.Diskretisierung, a.Datum from hnddat.pegeldaten as a where a.Pegelnummer = 10046105  LIMIT 100",
 		"csvdata" => array(
 			"csv" => 1, 
 			"discr" => 2, 

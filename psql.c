@@ -68,6 +68,14 @@ PHP_FUNCTION(confirm_psql_compiled)
 }
 /* }}} */
 
+void printout_char_array(char ** array, int array_length){
+	int i;
+	for(i=0; i<array_length; i++){
+		char * string_begin = array[i];
+		php_printf("%s \n", string_begin);
+	}
+}
+
 
 /* {{{ proto array doqueries(array queries)
    Nimmt einen array von sql-queries und führt diese in parallel aus. */
@@ -89,79 +97,99 @@ PHP_FUNCTION(doqueries)
 	char * queries_str[10];
 	csv_parameter queries_csv[10];
 	char * queries_indices[10];
-
-	HashTable * queriesdata_ht = Z_ARRVAL_P(queriesdata);
+	
+	php_printf("\n Typ von queriesdata ist %i", Z_TYPE_P(queriesdata));
+	if(Z_TYPE_P(queriesdata) != IS_ARRAY){
+		convert_to_array(queriesdata);
+		php_printf("Hey! queriesdata war gar kein hashtable!");
+	}
+	HashTable * queriesdata_htp = Z_ARRVAL_P(queriesdata);
 	HashPosition position;
-	zval * querydata = NULL;
-	for (	zend_hash_internal_pointer_reset_ex(queriesdata_ht, &position);
-			zend_hash_get_current_data_ex(queriesdata_ht, (void**) &querydata, &position) == SUCCESS;
-			zend_hash_move_forward_ex(queriesdata_ht, &position)) {
+	zval ** querydata_zvpp;
+	for (	zend_hash_internal_pointer_reset_ex(queriesdata_htp, &position);
+		zend_hash_get_current_data_ex(queriesdata_htp, (void**) &querydata_zvpp, &position) == SUCCESS;
+		zend_hash_move_forward_ex(queriesdata_htp, &position)) {
 
-		char * string_key = NULL;
-		ulong num_key;
-		zend_bool duplicate = 0;
-		zend_hash_get_current_key(queriesdata_ht, &string_key, &num_key, duplicate);
+		char * string_key;
+		ulong numeric_key;
+		uint laenge_key;
+		zend_bool duplicate;
+		int key_type = zend_hash_get_current_key_ex(queriesdata_htp, &string_key, &laenge_key, &numeric_key, 0, &position);
+		php_printf("\nDer Key ist vom Typ %i", key_type);
 		queries_indices[laenge_ht] = string_key;
+		php_printf("\nIteration %i: query-key: %s", laenge_ht, string_key);
 
-		HashTable * querydata_ht = Z_ARRVAL_P(querydata);
+
+		php_printf("\n Typ von querydata_zvpp ist %i", Z_TYPE_PP(querydata_zvpp));
+		if(Z_TYPE_PP(querydata_zvpp) != IS_ARRAY){
+			convert_to_array(*querydata_zvpp);
+			php_printf("Hey! querydata_zvpp war gar kein hashtable!");
+		}
+		HashTable * querydata_ht = Z_ARRVAL_PP(querydata_zvpp);
+
+
+		zval ** query_zvpp;
+		if (zend_hash_find(querydata_ht, "query", sizeof("query"), (void **) &query_zvpp)) { RETURN_NULL();}
+		php_printf("\n Typ von query_zvpp ist %i", Z_TYPE_PP(query_zvpp));
+		if(Z_TYPE_PP(query_zvpp) != IS_STRING){
+			convert_to_string(*query_zvpp);
+			php_printf("Hey! query war gar kein String!\n");
+		}
+		char * query = Z_STRVAL_PP(query_zvpp);
+		queries_str[laenge_ht] = query;
+		php_printf("\nIteration %i: query: %s", laenge_ht, query);
 
 /*
-		php_printf("Bin jetzt in Iteration %i bei dem Key %s \n", num_key, string_key);
-
-		HashPosition positionp;
-		zval * arrayitemdata = NULL;
-		for (   zend_hash_internal_pointer_reset_ex(querydata_ht, &positionp);
-                        zend_hash_get_current_data_ex(querydata_ht, (void**) &arrayitemdata, &positionp) == SUCCESS;
-                        zend_hash_move_forward_ex(querydata_ht, &positionp)){
-			char * string_keyk = NULL;
-			ulong num_keyk;
-			zend_bool duplicatek = 0;
-			zend_hash_get_current_key(querydata_ht, &string_keyk, &num_keyk, duplicatek);
-			php_printf("    Dieser array hat key %s \n", string_keyk);
-		}
-*/
-
-		char ** query;
-		if (zend_hash_find(querydata_ht, "query", strlen("query")+1, (void **) &query)) { RETURN_NULL();}
-		queries_str[laenge_ht] = query;
-
 		zval * csvdata_zv;
-		if (zend_hash_find(querydata_ht, "csvdata", strlen("csvdata")+1, (void **) &csvdata_zv)) { RETURN_NULL();}
+		if (zend_hash_find(querydata_ht, "csvdata", sizeof("csvdata"), (void **) &csvdata_zv)) { RETURN_NULL();}
+		if(Z_TYPE_P(csvdata_zv) != IS_ARRAY){
+			convert_to_array(csvdata_zv);
+			php_printf("Hey! csvdata war gar kein hashtable!");
+		}
 		HashTable * csvdata_ht = Z_ARRVAL_P(csvdata_zv);
 
-		int csvcol, discrcol, datecol;
-		if (zend_hash_find(csvdata_ht, "csv", strlen("csv")+1, (void **) &csvcol)) { RETURN_NULL();}
-		if (zend_hash_find(csvdata_ht, "discr", strlen("discr")+1,  (void **) &discrcol)) { RETURN_NULL();}
-		if (zend_hash_find(csvdata_ht, "date", strlen("date")+1, (void **) &datecol)) { RETURN_NULL();}
-
-		csv_parameter csvp = {csvcol, datecol, discrcol};
+		zval *  csvcol_zv, discrcol_zv, datecol_zv;
+		if (zend_hash_find(csvdata_ht, "csv", sizeof("csv"), (void **) &csvcol_zv)) { RETURN_NULL();}
+		
+		if(Z_TYPE_P(csvcol_zv) != IS_LONG){ convert_to_long(csvcol_zv);
+		}
+		if (zend_hash_find(csvdata_ht, "discr", sizeof("discr"),  (void **) &discrcol_zv)) { RETURN_NULL();}
+		if(Z_TYPE_P(discrcol_zv) != IS_LONG){
+			convert_to_long(discrcol_zv);
+		}
+		if (zend_hash_find(csvdata_ht, "date", sizeof("date"), (void **) &datecol_zv)) { RETURN_NULL();}
+		if(Z_TYPE_P(datecol_zv) != IS_LONG){
+			convert_to_long(datecol_zv);
+		}
+		long csvcol = Z_LVAL_P(csvcol_zv);
+		long datecol = Z_LVAL_P(datecol_zv);
+		long discrcol = Z_LVAL_P(discrcol_zv);
+*/		csv_parameter csvp = {1,2,3};  //{(int)csvcol, (int)datecol, (int)discrcol};
 		queries_csv[laenge_ht] = csvp;
 
 		laenge_ht++;
 	}
 
 
-	HashTable * dbcreds_ht = Z_ARRVAL_P(dbcreds);
-	if (zend_hash_find(queriesdata_ht, "dbcreds", sizeof("dbcreds"), (void **) dbcreds_ht)) { RETURN_NULL();}
+	HashTable * dbcreds_htp = Z_ARRVAL_P(dbcreds);
 
+	zval ** host_zvpp;
+	zval ** usr_zvpp;
+	zval ** pw_zvpp;
+	zval ** db_zvpp;
+	if(zend_hash_find(dbcreds_htp, "host", sizeof("host"), (void **) &host_zvpp)){ RETURN_NULL();}
+	char * host = Z_STRVAL_PP(host_zvpp);
+	if(zend_hash_find(dbcreds_htp, "usr", sizeof("usr"), (void **) &usr_zvpp)){ RETURN_NULL();}
+	char * usr = Z_STRVAL_PP(usr_zvpp);
+	if(zend_hash_find(dbcreds_htp, "pw", sizeof("pw"), (void **) &pw_zvpp)){ RETURN_NULL();}
+	char * pw = Z_STRVAL_PP(pw_zvpp);
+	if(zend_hash_find(dbcreds_htp, "db", sizeof("db"), (void **) &db_zvpp)){ RETURN_NULL();}
+	char * db = Z_STRVAL_PP(db_zvpp);
 
-	void ** host;
-	void **usr;
-	void **pw;
-	void ** db;
-	if(zend_hash_find(dbcreds_ht, "host", sizeof("host"), host)){ RETURN_NULL();}
-	if(zend_hash_find(dbcreds_ht, "usr", sizeof("usr"), host)){ RETURN_NULL();}
-	if(zend_hash_find(dbcreds_ht, "pw", sizeof("pw"), host)){ RETURN_NULL();}
-	if(zend_hash_find(dbcreds_ht, "db", sizeof("db"), host)){ RETURN_NULL();}
-
-//	if (zend_has_index_find(dbcreds_ht, "host", (void **) &host) == FAILURE) { RETURN_NULL();}
-//	if (zend_has_index_find(dbcreds_ht, "usr", (void **) &usr) == FAILURE) { RETURN_NULL();}
-//	if (zend_has_index_find(dbcreds_ht, "pw", (void **) &pw) == FAILURE) { RETURN_NULL();}
-//	if (zend_has_index_find(dbcreds_ht, "db", (void **) &db) == FAILURE) { RETURN_NULL();}
 	unsigned int port = 0;
 	char *socket = NULL;
 	unsigned int flags = 0;
-	db_creds dbcr = { (char *)*host, (char *)*usr, (char *)*pw, (char *)*db, port, socket, flags };
+	db_creds dbcr = { host, usr, pw, db, port, socket, flags };
 
 	/* SCHRITT 2: Verarbeiten der Daten; c-array zu c-array
 	 Hier beginnt die eigentliche Arbeit.
@@ -204,9 +232,9 @@ PHP_FUNCTION(doqueries)
 
 	mysql_library_end();
 
-//	for (t = 0; t < num_threads; t++) {
-//		printNullTerm3DCmtrx(all_data[t]);
-//	}
+	for (t = 0; t < num_threads; t++) {
+		printNullTerm3DCmtrx(all_data[t]);
+	}
 
 
 

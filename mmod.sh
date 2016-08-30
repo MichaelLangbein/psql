@@ -42,7 +42,7 @@ if grep -n  "${moduleentry}" $phpdir/php.ini
 then
 	echo "Modul bereits korrekt in php.ini eingetragen."
 else
-	$moduleentry >> $phpdir/php.ini
+	echo "$moduleentry" >> $phpdir/php.ini
 fi
 
 $phpexe ${modulename}.php

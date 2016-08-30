@@ -119,19 +119,19 @@ void freeNullTerm3DCmtrx(char **** cmtrx_pppp){
 			l=0;  // for each column ...
 			while(cmtrx_pp[l] != NULL){
 				cmtrx_p = cmtrx_pp[l];
-				efree(cmtrx_p);
+				free(cmtrx_p);
 				l++;
 			}  // ... end for each column
-			//efree(cmtrx_pp[l]);
-			efree(cmtrx_pp);
+			//free(cmtrx_pp[l]);
+			free(cmtrx_pp);
 			m++;
 		}   // ... end for each csv element
-		//efree(cmtrx_ppp[m]);
-		efree(cmtrx_ppp);
+		//free(cmtrx_ppp[m]);
+		free(cmtrx_ppp);
 		n++;
 	}   // ... end for each mysql-result line
-	//efree(cmtrx_pppp[n]);
-	efree(cmtrx_pppp);
+	//free(cmtrx_pppp[n]);
+	free(cmtrx_pppp);
 }
 
 
@@ -189,7 +189,7 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 	char datetime_arr[18];
 
 
-	char **** cmtrx_pppp = (char ****)emalloc((num_rows + 1) * sizeof(char ***));
+	char **** cmtrx_pppp = (char ****)malloc((num_rows + 1) * sizeof(char ***));
 
 	for (r = 0; r < num_rows; r++) {
 		row = mysql_fetch_row(reslt);
@@ -200,27 +200,27 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 		date_tstp = getTstp(date, "%Y-%m-%d");
 
 		num_steps = 1440 / discr;
-		cmtrx_pppp[r] = (char ***)emalloc((num_steps + 1) * sizeof(char **));
+		cmtrx_pppp[r] = (char ***)malloc((num_steps + 1) * sizeof(char **));
 
 		for (d = 0; d < num_steps; d++) {
 
 			entry = csvstring;
 			csvstring = cutOffToken(csvstring, ";");
-			cmtrx_pppp[r][d] = (char **)emalloc( (1 + num_cols) * sizeof(char *) );
+			cmtrx_pppp[r][d] = (char **)malloc( (1 + num_cols) * sizeof(char *) );
 
 			for(c = 0; c<num_cols; c++){
 				if(c == csv->csvcol){
-					cmtrx_pppp[r][d][c] = (char *)emalloc( (strlen(entry) + 1) * sizeof(char) );
+					cmtrx_pppp[r][d][c] = (char *)malloc( (strlen(entry) + 1) * sizeof(char) );
 					strcpy( cmtrx_pppp[r][d][c], entry );
 				}
 				else if(c == csv->datecol){
 					datetime = getDate(date_tstp, d*discr*60);
 					strcpy( datetime_arr, datetime);
-					cmtrx_pppp[r][d][c] = (char *)emalloc( (strlen(datetime) + 1) * sizeof(char) );
+					cmtrx_pppp[r][d][c] = (char *)malloc( (strlen(datetime) + 1) * sizeof(char) );
 					strcpy( cmtrx_pppp[r][d][c], datetime_arr );
 				}
 				else{
-					cmtrx_pppp[r][d][c] = (char *)emalloc( (strlen(row[c]) + 1) * sizeof(char) );
+					cmtrx_pppp[r][d][c] = (char *)malloc( (strlen(row[c]) + 1) * sizeof(char) );
 					strcpy( cmtrx_pppp[r][d][c], row[c] );
 				}
 			}
