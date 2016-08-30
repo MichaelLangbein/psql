@@ -103,21 +103,36 @@ PHP_FUNCTION(doqueries)
 		zend_hash_get_current_key(queriesdata_ht, &string_key, &num_key, duplicate);
 		queries_indices[laenge_ht] = string_key;
 
-
 		HashTable * querydata_ht = Z_ARRVAL_P(querydata);
 
-		char * query;
-		if (zend_hash_find(querydata_ht, "query", 6, (void **) &query)) { RETURN_NULL();}
+/*
+		php_printf("Bin jetzt in Iteration %i bei dem Key %s \n", num_key, string_key);
+
+		HashPosition positionp;
+		zval * arrayitemdata = NULL;
+		for (   zend_hash_internal_pointer_reset_ex(querydata_ht, &positionp);
+                        zend_hash_get_current_data_ex(querydata_ht, (void**) &arrayitemdata, &positionp) == SUCCESS;
+                        zend_hash_move_forward_ex(querydata_ht, &positionp)){
+			char * string_keyk = NULL;
+			ulong num_keyk;
+			zend_bool duplicatek = 0;
+			zend_hash_get_current_key(querydata_ht, &string_keyk, &num_keyk, duplicatek);
+			php_printf("    Dieser array hat key %s \n", string_keyk);
+		}
+*/
+
+		char ** query;
+		if (zend_hash_find(querydata_ht, "query", strlen("query")+1, (void **) &query)) { RETURN_NULL();}
 		queries_str[laenge_ht] = query;
 
 		zval * csvdata_zv;
-		if (zend_hash_find(querydata_ht, "csvdata", 8, (void **) &csvdata_zv)) { RETURN_NULL();}
+		if (zend_hash_find(querydata_ht, "csvdata", strlen("csvdata")+1, (void **) &csvdata_zv)) { RETURN_NULL();}
 		HashTable * csvdata_ht = Z_ARRVAL_P(csvdata_zv);
 
 		int csvcol, discrcol, datecol;
-		if (zend_hash_find(csvdata_ht, "csv", 4, (void **) &csvcol)) { RETURN_NULL();}
-		if (zend_hash_find(csvdata_ht, "discr", 6,  (void **) &discrcol)) { RETURN_NULL();}
-		if (zend_hash_find(csvdata_ht, "date", 5, (void **) &datecol)) { RETURN_NULL();}
+		if (zend_hash_find(csvdata_ht, "csv", strlen("csv")+1, (void **) &csvcol)) { RETURN_NULL();}
+		if (zend_hash_find(csvdata_ht, "discr", strlen("discr")+1,  (void **) &discrcol)) { RETURN_NULL();}
+		if (zend_hash_find(csvdata_ht, "date", strlen("date")+1, (void **) &datecol)) { RETURN_NULL();}
 
 		csv_parameter csvp = {csvcol, datecol, discrcol};
 		queries_csv[laenge_ht] = csvp;
@@ -127,17 +142,17 @@ PHP_FUNCTION(doqueries)
 
 
 	HashTable * dbcreds_ht = Z_ARRVAL_P(dbcreds);
-	if (zend_hash_find(queriesdata_ht, "dbcreds", 8, (void **) dbcreds_ht)) { RETURN_NULL();}
+	if (zend_hash_find(queriesdata_ht, "dbcreds", sizeof("dbcreds"), (void **) dbcreds_ht)) { RETURN_NULL();}
 
 
 	void ** host;
 	void **usr;
 	void **pw;
 	void ** db;
-	if(zend_hash_find(dbcreds_ht, "host", 5, host)){ RETURN_NULL();}
-	if(zend_hash_find(dbcreds_ht, "usr", 4, host)){ RETURN_NULL();}
-	if(zend_hash_find(dbcreds_ht, "pw", 3, host)){ RETURN_NULL();}
-	if(zend_hash_find(dbcreds_ht, "db", 3, host)){ RETURN_NULL();}
+	if(zend_hash_find(dbcreds_ht, "host", sizeof("host"), host)){ RETURN_NULL();}
+	if(zend_hash_find(dbcreds_ht, "usr", sizeof("usr"), host)){ RETURN_NULL();}
+	if(zend_hash_find(dbcreds_ht, "pw", sizeof("pw"), host)){ RETURN_NULL();}
+	if(zend_hash_find(dbcreds_ht, "db", sizeof("db"), host)){ RETURN_NULL();}
 
 //	if (zend_has_index_find(dbcreds_ht, "host", (void **) &host) == FAILURE) { RETURN_NULL();}
 //	if (zend_has_index_find(dbcreds_ht, "usr", (void **) &usr) == FAILURE) { RETURN_NULL();}
