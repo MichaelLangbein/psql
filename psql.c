@@ -115,56 +115,39 @@ PHP_FUNCTION(doqueries)
 		uint laenge_key;
 		zend_bool duplicate;
 		int key_type = zend_hash_get_current_key_ex(queriesdata_htp, &string_key, &laenge_key, &numeric_key, 0, &position);
-		php_printf("\nDer Key ist vom Typ %i", key_type);
 		queries_indices[laenge_ht] = string_key;
-		php_printf("\nIteration %i: query-key: %s", laenge_ht, string_key);
 
 
-		php_printf("\n Typ von querydata_zvpp ist %i", Z_TYPE_PP(querydata_zvpp));
-		if(Z_TYPE_PP(querydata_zvpp) != IS_ARRAY){
-			convert_to_array(*querydata_zvpp);
-			php_printf("Hey! querydata_zvpp war gar kein hashtable!");
-		}
+		if(Z_TYPE_PP(querydata_zvpp) != IS_ARRAY){convert_to_array(*querydata_zvpp);}
 		HashTable * querydata_ht = Z_ARRVAL_PP(querydata_zvpp);
 
 
 		zval ** query_zvpp;
 		if (zend_hash_find(querydata_ht, "query", sizeof("query"), (void **) &query_zvpp)) { RETURN_NULL();}
-		php_printf("\n Typ von query_zvpp ist %i", Z_TYPE_PP(query_zvpp));
-		if(Z_TYPE_PP(query_zvpp) != IS_STRING){
-			convert_to_string(*query_zvpp);
-			php_printf("Hey! query war gar kein String!\n");
-		}
+		if(Z_TYPE_PP(query_zvpp) != IS_STRING){	convert_to_string(*query_zvpp);	}
 		char * query = Z_STRVAL_PP(query_zvpp);
 		queries_str[laenge_ht] = query;
-		php_printf("\nIteration %i: query: %s", laenge_ht, query);
+		php_printf("Iteration %i: query: %s \n", laenge_ht, query);
 
-/*
-		zval * csvdata_zv;
-		if (zend_hash_find(querydata_ht, "csvdata", sizeof("csvdata"), (void **) &csvdata_zv)) { RETURN_NULL();}
-		if(Z_TYPE_P(csvdata_zv) != IS_ARRAY){
-			convert_to_array(csvdata_zv);
-			php_printf("Hey! csvdata war gar kein hashtable!");
-		}
-		HashTable * csvdata_ht = Z_ARRVAL_P(csvdata_zv);
+		zval ** csvdata_zvpp;
+		if (zend_hash_find(querydata_ht, "csvdata", sizeof("csvdata"), (void **) &csvdata_zvpp)) { RETURN_NULL();}
+		if(Z_TYPE_PP(csvdata_zvpp) != IS_ARRAY){convert_to_array(*csvdata_zvpp);}
+		HashTable * csvdata_htp = Z_ARRVAL_PP(csvdata_zvpp);
 
-		zval *  csvcol_zv, discrcol_zv, datecol_zv;
-		if (zend_hash_find(csvdata_ht, "csv", sizeof("csv"), (void **) &csvcol_zv)) { RETURN_NULL();}
-		
-		if(Z_TYPE_P(csvcol_zv) != IS_LONG){ convert_to_long(csvcol_zv);
-		}
-		if (zend_hash_find(csvdata_ht, "discr", sizeof("discr"),  (void **) &discrcol_zv)) { RETURN_NULL();}
-		if(Z_TYPE_P(discrcol_zv) != IS_LONG){
-			convert_to_long(discrcol_zv);
-		}
-		if (zend_hash_find(csvdata_ht, "date", sizeof("date"), (void **) &datecol_zv)) { RETURN_NULL();}
-		if(Z_TYPE_P(datecol_zv) != IS_LONG){
-			convert_to_long(datecol_zv);
-		}
-		long csvcol = Z_LVAL_P(csvcol_zv);
-		long datecol = Z_LVAL_P(datecol_zv);
-		long discrcol = Z_LVAL_P(discrcol_zv);
-*/		csv_parameter csvp = {1,2,3};  //{(int)csvcol, (int)datecol, (int)discrcol};
+
+		zval ** csvcol_zvpp;
+	       	zval ** discrcol_zvpp;
+		zval ** datecol_zvpp;
+		if (zend_hash_find(csvdata_htp, "csv", sizeof("csv"), (void **) &csvcol_zvpp)) { RETURN_NULL();}		
+		if (zend_hash_find(csvdata_htp, "discr", sizeof("discr"),  (void **) &discrcol_zvpp)) { RETURN_NULL();}
+		if (zend_hash_find(csvdata_htp, "date", sizeof("date"), (void **) &datecol_zvpp)) { RETURN_NULL();}
+		if((**csvcol_zvpp).type != IS_LONG){convert_to_long(*csvcol_zvpp);}
+		if((**discrcol_zvpp).type != IS_LONG){convert_to_long(*discrcol_zvpp);}
+		if((**datecol_zvpp).type != IS_LONG){convert_to_long(*datecol_zvpp);}
+		long csvcol = Z_LVAL_PP(csvcol_zvpp);
+		long datecol = Z_LVAL_PP(datecol_zvpp);
+		long discrcol = Z_LVAL_PP(discrcol_zvpp);
+		csv_parameter csvp = {(int)csvcol, (int)datecol, (int)discrcol};
 		queries_csv[laenge_ht] = csvp;
 
 		laenge_ht++;
@@ -178,12 +161,12 @@ PHP_FUNCTION(doqueries)
 	zval ** pw_zvpp;
 	zval ** db_zvpp;
 	if(zend_hash_find(dbcreds_htp, "host", sizeof("host"), (void **) &host_zvpp)){ RETURN_NULL();}
-	char * host = Z_STRVAL_PP(host_zvpp);
 	if(zend_hash_find(dbcreds_htp, "usr", sizeof("usr"), (void **) &usr_zvpp)){ RETURN_NULL();}
-	char * usr = Z_STRVAL_PP(usr_zvpp);
 	if(zend_hash_find(dbcreds_htp, "pw", sizeof("pw"), (void **) &pw_zvpp)){ RETURN_NULL();}
-	char * pw = Z_STRVAL_PP(pw_zvpp);
 	if(zend_hash_find(dbcreds_htp, "db", sizeof("db"), (void **) &db_zvpp)){ RETURN_NULL();}
+	char * host = Z_STRVAL_PP(host_zvpp);
+	char * usr = Z_STRVAL_PP(usr_zvpp);
+	char * pw = Z_STRVAL_PP(pw_zvpp);
 	char * db = Z_STRVAL_PP(db_zvpp);
 
 	unsigned int port = 0;
@@ -232,9 +215,9 @@ PHP_FUNCTION(doqueries)
 
 	mysql_library_end();
 
-	for (t = 0; t < num_threads; t++) {
-		printNullTerm3DCmtrx(all_data[t]);
-	}
+//	for (t = 0; t < num_threads; t++) {
+//		printNullTerm3DCmtrx(all_data[t]);
+//	}
 
 
 

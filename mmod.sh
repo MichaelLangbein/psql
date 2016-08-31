@@ -46,5 +46,5 @@ else
 fi
 
 $phpexe ${modulename}.php
-valgrind --log-file=${modulename}_valgrind.log $phpexe ${modulename}_adj.php
+valgrind -v --log-file=${modulename}_valgrind.log $phpexe ${modulename}_adj.php
 

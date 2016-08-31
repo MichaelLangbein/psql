@@ -154,7 +154,7 @@ time_t getTstp(char * date, char * format){
 	struct tm time;
 	time.tm_hour = 0;
 	time.tm_min = 0;
-	time.tm_sec = 0;
+	time.tm_sec = 0; 
 	strptime(date, format, &time);
 	time_t time_out = timegm(&time);
 	return time_out;
@@ -195,9 +195,12 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 		row = mysql_fetch_row(reslt);
 
 		discr = atoi(row[csv->discrcol]);
+		if(!discr){continue;}
 		csvstring = row[csv->csvcol];
-		date = row[csv->datecol];
-		date_tstp = getTstp(date, "%Y-%m-%d");
+		if(!csvstring){continue;}
+		date = row[csv->datecol]; 
+		if(!date){continue;}
+		date_tstp = getTstp(date, "%Y-%m-%d"); 
 
 		num_steps = 1440 / discr;
 		cmtrx_pppp[r] = (char ***)malloc((num_steps + 1) * sizeof(char **));

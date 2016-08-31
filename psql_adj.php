@@ -12,7 +12,7 @@ $queries = array(
 			"csvdata" => array(
 				"csv" => 1, 
 				"discr" => 2, 
-				"date" => 3 
+				"date" => 3
 			)
 	),
 	"b" => array(
@@ -20,7 +20,7 @@ $queries = array(
 		"csvdata" => array(
 			"csv" => 1, 
 			"discr" => 2, 
-			"date" => 3 
+			"date" => 3
 		)
 	),
 	"c" => array(
@@ -28,7 +28,7 @@ $queries = array(
 		"csvdata" => array(
 			"csv" => 1, 
 			"discr" => 2, 
-			"date" => 3 
+			"date" => 3
 		)
 	)
 );
