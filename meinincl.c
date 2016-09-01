@@ -195,11 +195,11 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 		row = mysql_fetch_row(reslt);
 
 		discr = atoi(row[csv->discrcol]);
-		if(!discr){continue;}
+		if(!discr){discr=1440;}
 		csvstring = row[csv->csvcol];
-		if(!csvstring){continue;}
+		if(!csvstring){csvstring = "";}
 		date = row[csv->datecol]; 
-		if(!date){continue;}
+		if(!date){date = "1970-01-01";}
 		date_tstp = getTstp(date, "%Y-%m-%d"); 
 
 		num_steps = 1440 / discr;
