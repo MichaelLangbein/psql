@@ -1,7 +1,7 @@
-srcdir = /home/hnd/php-5.6.25/ext/psql
-builddir = /home/hnd/php-5.6.25/ext/psql
-top_srcdir = /home/hnd/php-5.6.25/ext/psql
-top_builddir = /home/hnd/php-5.6.25/ext/psql
+srcdir = /home/hnd/php-5.5.9/ext/psql
+builddir = /home/hnd/php-5.5.9/ext/psql
+top_srcdir = /home/hnd/php-5.5.9/ext/psql
+top_builddir = /home/hnd/php-5.5.9/ext/psql
 EGREP = /bin/grep -E
 SED = /bin/sed
 CONFIGURE_COMMAND = './configure'
@@ -23,7 +23,7 @@ prefix = /usr/local
 exec_prefix = $(prefix)
 libdir = ${exec_prefix}/lib
 prefix = /usr/local
-phplibdir = /home/hnd/php-5.6.25/ext/psql/modules
+phplibdir = /home/hnd/php-5.5.9/ext/psql/modules
 phpincludedir = /usr/local/include/php
 CC = cc
 CFLAGS = -g -O0
@@ -33,7 +33,7 @@ CPPFLAGS = -DHAVE_CONFIG_H
 CXX =
 CXXFLAGS = -g -O0
 CXXFLAGS_CLEAN = $(CXXFLAGS)
-EXTENSION_DIR = /usr/local/lib/php/extensions/debug-zts-20131226
+EXTENSION_DIR = /usr/local/lib/php/extensions/debug-zts-20121212
 PHP_EXECUTABLE = /usr/local/bin/php
 EXTRA_LDFLAGS =
 EXTRA_LIBS =
@@ -99,7 +99,7 @@ install-headers:
 			paths="$$paths $(INSTALL_ROOT)$(phpincludedir)/$$i"; \
 		done; \
 		$(mkinstalldirs) $$paths && \
-		echo "Installing header files:           $(INSTALL_ROOT)$(phpincludedir)/" && \
+		echo "Installing header files:          $(INSTALL_ROOT)$(phpincludedir)/" && \
 		for i in `echo $(INSTALL_HEADERS)`; do \
 			if test "$(PHP_PECL_EXTENSION)"; then \
 				src=`echo $$i | $(SED) -e "s#ext/$(PHP_PECL_EXTENSION)/##g"`; \
@@ -166,7 +166,7 @@ clean:
 distclean: clean
 	rm -f Makefile config.cache config.log config.status Makefile.objects Makefile.fragments libtool main/php_config.h main/internal_functions_cli.c main/internal_functions.c stamp-h sapi/apache/libphp$(PHP_MAJOR_VERSION).module sapi/apache_hooks/libphp$(PHP_MAJOR_VERSION).module buildmk.stamp Zend/zend_dtrace_gen.h Zend/zend_dtrace_gen.h.bak Zend/zend_config.h TSRM/tsrm_config.h
 	rm -f php5.spec main/build-defs.h scripts/phpize
-	rm -f ext/date/lib/timelib_config.h ext/mbstring/oniguruma/config.h ext/mbstring/libmbfl/config.h ext/oci8/oci8_dtrace_gen.h ext/oci8/oci8_dtrace_gen.h.bak
+	rm -f ext/date/lib/timelib_config.h ext/mbstring/oniguruma/config.h ext/mbstring/libmbfl/config.h ext/mysqlnd/php_mysqlnd_config.h
 	rm -f scripts/man1/phpize.1 scripts/php-config scripts/man1/php-config.1 sapi/cli/php.1 sapi/cgi/php-cgi.1 ext/phar/phar.1 ext/phar/phar.phar.1
 	rm -f sapi/fpm/php-fpm.conf sapi/fpm/init.d.php-fpm sapi/fpm/php-fpm.service sapi/fpm/php-fpm.8 sapi/fpm/status.html
 	rm -f ext/iconv/php_have_bsd_iconv.h ext/iconv/php_have_glibc_iconv.h ext/iconv/php_have_ibm_iconv.h ext/iconv/php_have_iconv.h ext/iconv/php_have_libiconv.h ext/iconv/php_iconv_aliased_libiconv.h ext/iconv/php_iconv_supports_errno.h ext/iconv/php_php_iconv_h_path.h ext/iconv/php_php_iconv_impl.h
@@ -178,10 +178,10 @@ distclean: clean
 
 .PHONY: all clean install distclean test
 .NOEXPORT:
-psql.lo: /home/hnd/php-5.6.25/ext/psql/psql.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/hnd/php-5.6.25/ext/psql $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/hnd/php-5.6.25/ext/psql/psql.c -o psql.lo 
-meinincl.lo: /home/hnd/php-5.6.25/ext/psql/meinincl.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/hnd/php-5.6.25/ext/psql $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/hnd/php-5.6.25/ext/psql/meinincl.c -o meinincl.lo 
+psql.lo: /home/hnd/php-5.5.9/ext/psql/psql.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/hnd/php-5.5.9/ext/psql $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/hnd/php-5.5.9/ext/psql/psql.c -o psql.lo 
+meinincl.lo: /home/hnd/php-5.5.9/ext/psql/meinincl.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/hnd/php-5.5.9/ext/psql $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/hnd/php-5.5.9/ext/psql/meinincl.c -o meinincl.lo 
 $(phplibdir)/psql.la: ./psql.la
 	$(LIBTOOL) --mode=install cp ./psql.la $(phplibdir)
 

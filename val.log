@@ -1,187 +1,185 @@
-==5519== Memcheck, a memory error detector
-==5519== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==5519== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==5519== Command: /usr/local/bin/php psql_adj.php ?
-==5519== Parent PID: 2955
-==5519== 
---5519-- 
---5519-- Valgrind options:
---5519--    -v
---5519--    --show-leak-kinds=all
---5519--    --leak-check=full
---5519--    --log-file=val.log
---5519-- Contents of /proc/version:
---5519--   Linux version 3.13.0-32-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
---5519-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-sse3
---5519-- Page sizes: currently 4096, max supported 4096
---5519-- Valgrind library directory: /usr/lib/valgrind
---5519-- Reading syms from /usr/local/bin/php
---5519-- Reading syms from /lib/x86_64-linux-gnu/ld-2.19.so
---5519--   Considering /lib/x86_64-linux-gnu/ld-2.19.so ..
---5519--   .. CRC mismatch (computed 46abf574 wanted 3ca2d3ca)
---5519--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.19.so ..
---5519--   .. CRC is valid
---5519-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
---5519--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
---5519--   .. CRC mismatch (computed 4f1eed43 wanted a323a3ab)
---5519--    object doesn't have a symbol table
---5519--    object doesn't have a dynamic symbol table
---5519-- Scheduler: using generic scheduler lock implementation.
---5519-- Reading suppressions file: /usr/lib/valgrind/default.supp
-==5519== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-5519-by-hnd-on-???
-==5519== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-5519-by-hnd-on-???
-==5519== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-5519-by-hnd-on-???
-==5519== 
-==5519== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==5519== don't want to do, unless you know exactly what you're doing,
-==5519== or are doing some strange experiment):
-==5519==   /usr/lib/valgrind/../../bin/vgdb --pid=5519 ...command...
-==5519== 
-==5519== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==5519==   /path/to/gdb /usr/local/bin/php
-==5519== and then give GDB the following command
-==5519==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=5519
-==5519== --pid is optional if only one valgrind process is running
-==5519== 
---5519-- REDIR: 0x4019c50 (ld-linux-x86-64.so.2:strlen) redirected to 0x380764b1 (???)
---5519-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
---5519--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
---5519--   .. CRC mismatch (computed fc68135e wanted 45f5e986)
---5519--    object doesn't have a symbol table
---5519-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
---5519--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
---5519--   .. CRC mismatch (computed ae683f7e wanted 08c06df2)
---5519--    object doesn't have a symbol table
-==5519== WARNING: new redirection conflicts with existing -- ignoring it
---5519--     old: 0x04019c50 (strlen              ) R-> (0000.0) 0x380764b1 ???
---5519--     new: 0x04019c50 (strlen              ) R-> (2007.0) 0x04c2e1a0 strlen
---5519-- REDIR: 0x4019a00 (ld-linux-x86-64.so.2:index) redirected to 0x4c2dd50 (index)
---5519-- REDIR: 0x4019c20 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2f2f0 (strcmp)
---5519-- REDIR: 0x401a970 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31da0 (mempcpy)
---5519-- Reading syms from /lib/x86_64-linux-gnu/libresolv-2.19.so
---5519--   Considering /lib/x86_64-linux-gnu/libresolv-2.19.so ..
---5519--   .. CRC mismatch (computed b2c0b317 wanted 63fc9f84)
---5519--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libresolv-2.19.so ..
---5519--   .. CRC is valid
---5519-- Reading syms from /lib/x86_64-linux-gnu/libm-2.19.so
---5519--   Considering /lib/x86_64-linux-gnu/libm-2.19.so ..
---5519--   .. CRC mismatch (computed 08659659 wanted 7ce1b39a)
---5519--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.19.so ..
---5519--   .. CRC is valid
---5519-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.19.so
---5519--   Considering /lib/x86_64-linux-gnu/libdl-2.19.so ..
---5519--   .. CRC mismatch (computed 5e07a82d wanted c608f377)
---5519--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libdl-2.19.so ..
---5519--   .. CRC is valid
---5519-- Reading syms from /usr/lib/x86_64-linux-gnu/libxml2.so.2.9.1
---5519--    object doesn't have a symbol table
---5519-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.19.so
---5519--   Considering /lib/x86_64-linux-gnu/libpthread-2.19.so ..
---5519--   .. CRC mismatch (computed 88040ace wanted 71b58165)
---5519--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libpthread-2.19.so ..
---5519--   .. CRC is valid
---5519-- Reading syms from /lib/x86_64-linux-gnu/libc-2.19.so
---5519--   Considering /lib/x86_64-linux-gnu/libc-2.19.so ..
---5519--   .. CRC mismatch (computed ac9b5ddb wanted a10d05bf)
---5519--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.19.so ..
---5519--   .. CRC is valid
---5519-- Reading syms from /lib/x86_64-linux-gnu/libz.so.1.2.8
---5519--    object doesn't have a symbol table
---5519-- Reading syms from /lib/x86_64-linux-gnu/liblzma.so.5.0.0
---5519--    object doesn't have a symbol table
---5519-- REDIR: 0x5b6dc50 (libc.so.6:strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b6ff40 (libc.so.6:strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b6d420 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b6b670 (libc.so.6:strncpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b69dd0 (libc.so.6:strncmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b693f0 (libc.so.6:strcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b6daa0 (libc.so.6:stpcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b67d10 (libc.so.6:index) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b6ce50 (libc.so.6:bcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b67f60 (libc.so.6:strcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5be99e0 (libc.so.6:__memmove_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5be9990 (libc.so.6:__memcpy_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b72620 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b67b10 (libc.so.6:strcat) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b6b6b0 (libc.so.6:rindex) redirected to 0x4c2da30 (rindex)
---5519-- REDIR: 0x5b699b0 (libc.so.6:strlen) redirected to 0x4c2e0e0 (strlen)
---5519-- REDIR: 0x5b63660 (libc.so.6:malloc) redirected to 0x4c2ab10 (malloc)
---5519-- REDIR: 0x5b72670 (libc.so.6:__GI_memcpy) redirected to 0x4c2fc90 (__GI_memcpy)
---5519-- REDIR: 0x5b78ec0 (libc.so.6:__memcpy_sse2_unaligned) redirected to 0x4c2f6b0 (memcpy@@GLIBC_2.14)
---5519-- REDIR: 0x5b64130 (libc.so.6:calloc) redirected to 0x4c2cbf0 (calloc)
---5519-- REDIR: 0x5b63e00 (libc.so.6:realloc) redirected to 0x4c2ce10 (realloc)
---5519-- REDIR: 0x5b6d4b0 (libc.so.6:memset) redirected to 0x4c31350 (memset)
---5519-- REDIR: 0x5b69e20 (libc.so.6:__GI_strncmp) redirected to 0x4c2e930 (__GI_strncmp)
---5519-- REDIR: 0x5b63d00 (libc.so.6:free) redirected to 0x4c2bd80 (free)
---5519-- REDIR: 0x5c40c60 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c30c00 (__memcmp_sse4_1)
---5519-- REDIR: 0x5b67fa0 (libc.so.6:__GI_strcmp) redirected to 0x4c2f200 (__GI_strcmp)
---5519-- REDIR: 0x5b6cb00 (libc.so.6:memchr) redirected to 0x4c2f390 (memchr)
---5519-- REDIR: 0x5b67d40 (libc.so.6:__GI_strchr) redirected to 0x4c2db90 (__GI_strchr)
---5519-- REDIR: 0x5b6dae0 (libc.so.6:__GI_stpcpy) redirected to 0x4c30da0 (__GI_stpcpy)
---5519-- REDIR: 0x5b6c300 (libc.so.6:__GI_strstr) redirected to 0x4c32030 (__strstr_sse2)
---5519-- REDIR: 0x5b6ce90 (libc.so.6:__GI_memcmp) redirected to 0x4c30b80 (__GI_memcmp)
---5519-- REDIR: 0x5b69430 (libc.so.6:__GI_strcpy) redirected to 0x4c2e2a0 (__GI_strcpy)
---5519-- REDIR: 0x5c358f0 (libc.so.6:__strncasecmp_ssse3) redirected to 0x4c2eb60 (strncasecmp)
---5519-- REDIR: 0x5c337a0 (libc.so.6:__strcasecmp_ssse3) redirected to 0x4c2ea80 (strcasecmp)
---5519-- Reading syms from /usr/local/lib/php/extensions/debug-zts-20131226/psql.so
---5519-- Reading syms from /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0
---5519--    object doesn't have a symbol table
---5519-- REDIR: 0x5b6c8c0 (libc.so.6:strstr) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5519-- REDIR: 0x5b78c10 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c2f1b0 (strcmp)
---5519-- Reading syms from /usr/local/lib/php/extensions/debug-zts-20131226/testmodul.so
---5519-- REDIR: 0xffffffffff600400 (???:???) redirected to 0x3807649d (???)
---5519-- REDIR: 0xffffffffff600000 (???:???) redirected to 0x38076493 (???)
---5519-- REDIR: 0x5c22060 (libc.so.6:__strncmp_ssse3) redirected to 0x4c2e8c0 (strncmp)
---5519-- REDIR: 0x5b82120 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4c31fa0 (strstr)
---5519-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
---5519--   Considering /lib/x86_64-linux-gnu/libgcc_s.so.1 ..
---5519--   .. CRC mismatch (computed 6116126e wanted 54e3f1f2)
---5519--    object doesn't have a symbol table
---5519-- REDIR: 0x5b7da80 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2e1c0 (strcpy)
---5519-- REDIR: 0x5b749b0 (libc.so.6:strchrnul) redirected to 0x4c319b0 (strchrnul)
---5519-- Reading syms from /lib/x86_64-linux-gnu/libnss_files-2.19.so
---5519--   Considering /lib/x86_64-linux-gnu/libnss_files-2.19.so ..
---5519--   .. CRC mismatch (computed 69b3fb24 wanted 71fe8a31)
---5519--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libnss_files-2.19.so ..
---5519--   .. CRC is valid
---5519-- REDIR: 0x5b747a0 (libc.so.6:rawmemchr) redirected to 0x4c319f0 (rawmemchr)
---5519-- REDIR: 0x5c30c90 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2f450 (memcpy@GLIBC_2.2.5)
---5519-- REDIR: 0xffffffffff600800 (???:???) redirected to 0x380764a7 (???)
---5519-- REDIR: 0x5b69b70 (libc.so.6:strnlen) redirected to 0x4c2e080 (strnlen)
---5519-- Discarding syms at 0x744aee0-0x744b516 in /usr/local/lib/php/extensions/debug-zts-20131226/testmodul.so due to munmap()
---5519-- Discarding syms at 0x6d0e010-0x6d10082 in /usr/local/lib/php/extensions/debug-zts-20131226/psql.so due to munmap()
---5519-- Discarding syms at 0x6f3dcf0-0x6fa4d99 in /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0 due to munmap()
---5519-- Discarding syms at 0x7e50ab0-0x7e60985 in /lib/x86_64-linux-gnu/libgcc_s.so.1 due to munmap()
---5519-- Discarding syms at 0x80662a0-0x806beb3 in /lib/x86_64-linux-gnu/libnss_files-2.19.so due to munmap()
-==5519== 
-==5519== HEAP SUMMARY:
-==5519==     in use at exit: 32 bytes in 1 blocks
-==5519==   total heap usage: 19,909 allocs, 19,908 frees, 3,996,468 bytes allocated
-==5519== 
-==5519== Searching for pointers to 1 not-freed blocks
-==5519== Checked 288,680 bytes
-==5519== 
-==5519== 32 bytes in 1 blocks are still reachable in loss record 1 of 1
-==5519==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5519==    by 0x535968F: _dlerror_run (dlerror.c:141)
-==5519==    by 0x53590C0: dlopen@@GLIBC_2.2.5 (dlopen.c:87)
-==5519==    by 0x749400: php_load_extension (dl.c:144)
-==5519==    by 0x7F53F5: php_load_php_extension_cb (php_ini.c:351)
-==5519==    by 0x89B2EB: zend_llist_apply (zend_llist.c:191)
-==5519==    by 0x7F64E4: php_ini_register_extensions (php_ini.c:745)
-==5519==    by 0x7EB4C7: php_module_startup (main.c:2322)
-==5519==    by 0x97807F: php_cli_startup (php_cli.c:417)
-==5519==    by 0x97ADEA: main (php_cli.c:1358)
-==5519== 
-==5519== LEAK SUMMARY:
-==5519==    definitely lost: 0 bytes in 0 blocks
-==5519==    indirectly lost: 0 bytes in 0 blocks
-==5519==      possibly lost: 0 bytes in 0 blocks
-==5519==    still reachable: 32 bytes in 1 blocks
-==5519==         suppressed: 0 bytes in 0 blocks
-==5519== 
-==5519== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
---5519-- 
---5519-- used_suppression:      1 dl-hack4-64bit-addr-1 /usr/lib/valgrind/default.supp:1235
-==5519== 
-==5519== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==3630== Memcheck, a memory error detector
+==3630== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==3630== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==3630== Command: /usr/local/bin/php psql_adj.php ?
+==3630== Parent PID: 1606
+==3630== 
+--3630-- 
+--3630-- Valgrind options:
+--3630--    -v
+--3630--    --show-leak-kinds=all
+--3630--    --leak-check=full
+--3630--    --log-file=val.log
+--3630-- Contents of /proc/version:
+--3630--   Linux version 3.13.0-32-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+--3630-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-sse3
+--3630-- Page sizes: currently 4096, max supported 4096
+--3630-- Valgrind library directory: /usr/lib/valgrind
+--3630-- Reading syms from /usr/local/bin/php
+--3630-- Reading syms from /lib/x86_64-linux-gnu/ld-2.19.so
+--3630--   Considering /lib/x86_64-linux-gnu/ld-2.19.so ..
+--3630--   .. CRC mismatch (computed 46abf574 wanted 3ca2d3ca)
+--3630--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.19.so ..
+--3630--   .. CRC is valid
+--3630-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--3630--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--3630--   .. CRC mismatch (computed 4f1eed43 wanted a323a3ab)
+--3630--    object doesn't have a symbol table
+--3630--    object doesn't have a dynamic symbol table
+--3630-- Scheduler: using generic scheduler lock implementation.
+--3630-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==3630== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-3630-by-hnd-on-???
+==3630== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-3630-by-hnd-on-???
+==3630== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-3630-by-hnd-on-???
+==3630== 
+==3630== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==3630== don't want to do, unless you know exactly what you're doing,
+==3630== or are doing some strange experiment):
+==3630==   /usr/lib/valgrind/../../bin/vgdb --pid=3630 ...command...
+==3630== 
+==3630== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==3630==   /path/to/gdb /usr/local/bin/php
+==3630== and then give GDB the following command
+==3630==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=3630
+==3630== --pid is optional if only one valgrind process is running
+==3630== 
+--3630-- REDIR: 0x4019c50 (ld-linux-x86-64.so.2:strlen) redirected to 0x380764b1 (???)
+--3630-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--3630--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--3630--   .. CRC mismatch (computed fc68135e wanted 45f5e986)
+--3630--    object doesn't have a symbol table
+--3630-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--3630--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--3630--   .. CRC mismatch (computed ae683f7e wanted 08c06df2)
+--3630--    object doesn't have a symbol table
+==3630== WARNING: new redirection conflicts with existing -- ignoring it
+--3630--     old: 0x04019c50 (strlen              ) R-> (0000.0) 0x380764b1 ???
+--3630--     new: 0x04019c50 (strlen              ) R-> (2007.0) 0x04c2e1a0 strlen
+--3630-- REDIR: 0x4019a00 (ld-linux-x86-64.so.2:index) redirected to 0x4c2dd50 (index)
+--3630-- REDIR: 0x4019c20 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2f2f0 (strcmp)
+--3630-- REDIR: 0x401a970 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31da0 (mempcpy)
+--3630-- Reading syms from /lib/x86_64-linux-gnu/libresolv-2.19.so
+--3630--   Considering /lib/x86_64-linux-gnu/libresolv-2.19.so ..
+--3630--   .. CRC mismatch (computed b2c0b317 wanted 63fc9f84)
+--3630--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libresolv-2.19.so ..
+--3630--   .. CRC is valid
+--3630-- Reading syms from /lib/x86_64-linux-gnu/libm-2.19.so
+--3630--   Considering /lib/x86_64-linux-gnu/libm-2.19.so ..
+--3630--   .. CRC mismatch (computed 08659659 wanted 7ce1b39a)
+--3630--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.19.so ..
+--3630--   .. CRC is valid
+--3630-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.19.so
+--3630--   Considering /lib/x86_64-linux-gnu/libdl-2.19.so ..
+--3630--   .. CRC mismatch (computed 5e07a82d wanted c608f377)
+--3630--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libdl-2.19.so ..
+--3630--   .. CRC is valid
+--3630-- Reading syms from /usr/lib/x86_64-linux-gnu/libxml2.so.2.9.1
+--3630--    object doesn't have a symbol table
+--3630-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.19.so
+--3630--   Considering /lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--3630--   .. CRC mismatch (computed 88040ace wanted 71b58165)
+--3630--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--3630--   .. CRC is valid
+--3630-- Reading syms from /lib/x86_64-linux-gnu/libc-2.19.so
+--3630--   Considering /lib/x86_64-linux-gnu/libc-2.19.so ..
+--3630--   .. CRC mismatch (computed ac9b5ddb wanted a10d05bf)
+--3630--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.19.so ..
+--3630--   .. CRC is valid
+--3630-- Reading syms from /lib/x86_64-linux-gnu/libz.so.1.2.8
+--3630--    object doesn't have a symbol table
+--3630-- Reading syms from /lib/x86_64-linux-gnu/liblzma.so.5.0.0
+--3630--    object doesn't have a symbol table
+--3630-- REDIR: 0x5b6dc50 (libc.so.6:strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b6ff40 (libc.so.6:strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b6d420 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b6b670 (libc.so.6:strncpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b69dd0 (libc.so.6:strncmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b693f0 (libc.so.6:strcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b6daa0 (libc.so.6:stpcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b67d10 (libc.so.6:index) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b6ce50 (libc.so.6:bcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b67f60 (libc.so.6:strcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5be99e0 (libc.so.6:__memmove_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5be9990 (libc.so.6:__memcpy_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b72620 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b67b10 (libc.so.6:strcat) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b6b6b0 (libc.so.6:rindex) redirected to 0x4c2da30 (rindex)
+--3630-- REDIR: 0x5b699b0 (libc.so.6:strlen) redirected to 0x4c2e0e0 (strlen)
+--3630-- REDIR: 0x5b63660 (libc.so.6:malloc) redirected to 0x4c2ab10 (malloc)
+--3630-- REDIR: 0x5b72670 (libc.so.6:__GI_memcpy) redirected to 0x4c2fc90 (__GI_memcpy)
+--3630-- REDIR: 0x5b78ec0 (libc.so.6:__memcpy_sse2_unaligned) redirected to 0x4c2f6b0 (memcpy@@GLIBC_2.14)
+--3630-- REDIR: 0x5b64130 (libc.so.6:calloc) redirected to 0x4c2cbf0 (calloc)
+--3630-- REDIR: 0x5b63e00 (libc.so.6:realloc) redirected to 0x4c2ce10 (realloc)
+--3630-- REDIR: 0x5b6d4b0 (libc.so.6:memset) redirected to 0x4c31350 (memset)
+--3630-- REDIR: 0x5b69e20 (libc.so.6:__GI_strncmp) redirected to 0x4c2e930 (__GI_strncmp)
+--3630-- REDIR: 0x5b63d00 (libc.so.6:free) redirected to 0x4c2bd80 (free)
+--3630-- REDIR: 0x5c40c60 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c30c00 (__memcmp_sse4_1)
+--3630-- REDIR: 0x5b67fa0 (libc.so.6:__GI_strcmp) redirected to 0x4c2f200 (__GI_strcmp)
+--3630-- REDIR: 0x5b6cb00 (libc.so.6:memchr) redirected to 0x4c2f390 (memchr)
+--3630-- REDIR: 0x5b67d40 (libc.so.6:__GI_strchr) redirected to 0x4c2db90 (__GI_strchr)
+--3630-- REDIR: 0x5b6dae0 (libc.so.6:__GI_stpcpy) redirected to 0x4c30da0 (__GI_stpcpy)
+--3630-- REDIR: 0x5b6c300 (libc.so.6:__GI_strstr) redirected to 0x4c32030 (__strstr_sse2)
+--3630-- REDIR: 0x5b6ce90 (libc.so.6:__GI_memcmp) redirected to 0x4c30b80 (__GI_memcmp)
+--3630-- REDIR: 0x5b69430 (libc.so.6:__GI_strcpy) redirected to 0x4c2e2a0 (__GI_strcpy)
+--3630-- REDIR: 0x5c358f0 (libc.so.6:__strncasecmp_ssse3) redirected to 0x4c2eb60 (strncasecmp)
+--3630-- REDIR: 0x5c337a0 (libc.so.6:__strcasecmp_ssse3) redirected to 0x4c2ea80 (strcasecmp)
+--3630-- Reading syms from /usr/local/lib/php/extensions/debug-zts-20121212/psql.so
+--3630-- Reading syms from /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0
+--3630--    object doesn't have a symbol table
+--3630-- REDIR: 0x5b6c8c0 (libc.so.6:strstr) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3630-- REDIR: 0x5b78c10 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c2f1b0 (strcmp)
+--3630-- REDIR: 0x5b749b0 (libc.so.6:strchrnul) redirected to 0x4c319b0 (strchrnul)
+--3630-- REDIR: 0xffffffffff600400 (???:???) redirected to 0x3807649d (???)
+--3630-- REDIR: 0xffffffffff600000 (???:???) redirected to 0x38076493 (???)
+--3630-- REDIR: 0x5c22060 (libc.so.6:__strncmp_ssse3) redirected to 0x4c2e8c0 (strncmp)
+--3630-- REDIR: 0x5b82120 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4c31fa0 (strstr)
+--3630-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
+--3630--   Considering /lib/x86_64-linux-gnu/libgcc_s.so.1 ..
+--3630--   .. CRC mismatch (computed 6116126e wanted 54e3f1f2)
+--3630--    object doesn't have a symbol table
+--3630-- REDIR: 0x5b7da80 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2e1c0 (strcpy)
+--3630-- Reading syms from /lib/x86_64-linux-gnu/libnss_files-2.19.so
+--3630--   Considering /lib/x86_64-linux-gnu/libnss_files-2.19.so ..
+--3630--   .. CRC mismatch (computed 69b3fb24 wanted 71fe8a31)
+--3630--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libnss_files-2.19.so ..
+--3630--   .. CRC is valid
+--3630-- REDIR: 0x5b747a0 (libc.so.6:rawmemchr) redirected to 0x4c319f0 (rawmemchr)
+--3630-- REDIR: 0x5c30c90 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2f450 (memcpy@GLIBC_2.2.5)
+--3630-- REDIR: 0xffffffffff600800 (???:???) redirected to 0x380764a7 (???)
+--3630-- REDIR: 0x5b69b70 (libc.so.6:strnlen) redirected to 0x4c2e080 (strnlen)
+--3630-- Discarding syms at 0x6d0e010-0x6d1008c in /usr/local/lib/php/extensions/debug-zts-20121212/psql.so due to munmap()
+--3630-- Discarding syms at 0x6f3dcf0-0x6fa4d99 in /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0 due to munmap()
+--3630-- Discarding syms at 0x7c4dab0-0x7c5d985 in /lib/x86_64-linux-gnu/libgcc_s.so.1 due to munmap()
+--3630-- Discarding syms at 0x7e632a0-0x7e68eb3 in /lib/x86_64-linux-gnu/libnss_files-2.19.so due to munmap()
+==3630== 
+==3630== HEAP SUMMARY:
+==3630==     in use at exit: 32 bytes in 1 blocks
+==3630==   total heap usage: 19,742 allocs, 19,741 frees, 3,975,075 bytes allocated
+==3630== 
+==3630== Searching for pointers to 1 not-freed blocks
+==3630== Checked 288,664 bytes
+==3630== 
+==3630== 32 bytes in 1 blocks are still reachable in loss record 1 of 1
+==3630==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3630==    by 0x535968F: _dlerror_run (dlerror.c:141)
+==3630==    by 0x53590C0: dlopen@@GLIBC_2.2.5 (dlopen.c:87)
+==3630==    by 0x6E2D1E: php_load_extension (dl.c:144)
+==3630==    by 0x78D9B6: php_load_php_extension_cb (php_ini.c:351)
+==3630==    by 0x82F927: zend_llist_apply (zend_llist.c:191)
+==3630==    by 0x78E9BE: php_ini_register_extensions (php_ini.c:727)
+==3630==    by 0x783CEA: php_module_startup (main.c:2228)
+==3630==    by 0x901099: php_cli_startup (php_cli.c:417)
+==3630==    by 0x903DD9: main (php_cli.c:1358)
+==3630== 
+==3630== LEAK SUMMARY:
+==3630==    definitely lost: 0 bytes in 0 blocks
+==3630==    indirectly lost: 0 bytes in 0 blocks
+==3630==      possibly lost: 0 bytes in 0 blocks
+==3630==    still reachable: 32 bytes in 1 blocks
+==3630==         suppressed: 0 bytes in 0 blocks
+==3630== 
+==3630== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--3630-- 
+--3630-- used_suppression:      1 dl-hack4-64bit-addr-1 /usr/lib/valgrind/default.supp:1235
+==3630== 
+==3630== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)

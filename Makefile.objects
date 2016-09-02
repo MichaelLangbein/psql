@@ -1,7 +1,7 @@
-psql.lo: /home/hnd/php-5.6.25/ext/psql/psql.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/hnd/php-5.6.25/ext/psql $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/hnd/php-5.6.25/ext/psql/psql.c -o psql.lo 
-meinincl.lo: /home/hnd/php-5.6.25/ext/psql/meinincl.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/hnd/php-5.6.25/ext/psql $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/hnd/php-5.6.25/ext/psql/meinincl.c -o meinincl.lo 
+psql.lo: /home/hnd/php-5.5.9/ext/psql/psql.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/hnd/php-5.5.9/ext/psql $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/hnd/php-5.5.9/ext/psql/psql.c -o psql.lo 
+meinincl.lo: /home/hnd/php-5.5.9/ext/psql/meinincl.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/hnd/php-5.5.9/ext/psql $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/hnd/php-5.5.9/ext/psql/meinincl.c -o meinincl.lo 
 $(phplibdir)/psql.la: ./psql.la
 	$(LIBTOOL) --mode=install cp ./psql.la $(phplibdir)
 
