@@ -14,7 +14,11 @@
 #    3.0.2. Anpassen der config.m4: mindestens PHP_ARG_ENABLE und PHP_NEW EXTENSION
 #  3.1. git clone https://github.com/rinso86/psql.git
 #  3.2. ./mmod.sh
-
+#
+# Debuggen ist bemerkenswert einfach. 
+#	1. gdb /usr/local/bin/php
+#	2. (gdb) break psql.c:84
+#	3. (gdb) run psql_adj.php
 
 phpdir="/usr/local/lib";
 modulesdir="${phpdir}/php/extensions/debug-zts-20131226/";
@@ -46,4 +50,4 @@ else
 fi
 
 $phpexe ${modulename}.php
-valgrind -v --log-file=val.log $phpexe ${modulename}_adj.php
+valgrind -v --show-leak-kinds=all --leak-check=full --log-file=val.log $phpexe ${modulename}_adj.php ?> exec.log

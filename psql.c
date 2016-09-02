@@ -244,20 +244,23 @@ PHP_FUNCTION(doqueries)
 			while(query_result[r][d] != NULL){
 
 				zval * row_result_zv;
+				ALLOC_INIT_ZVAL(row_result_zv);
+				array_init(row_result_zv);
+
 				int c = 0;
 				while(query_result[r][d][c] != NULL){
-					php_printf(" Now adding %s \n", query_result[r][d][c]);
-					add_next_index_string(row_result_zv, "somval", 1);
+					add_next_index_string(row_result_zv, query_result[r][d][c], 1);
 					c++;
 				}
 
 				add_next_index_zval(query_result_zv, row_result_zv);
+				//zval_ptr_dtor(&row_result_zv); // Diesen array nicht zerstören! Muss ja noch an php ausgegeben werden!
 				rr++;
 				d++;
 			}
 			r++;
 		}
-
+		//zval_ptr_dtor(&query_result_zv); // Diesen array nicht zerstören! Muss ja noch an php ausgegeben werden!
 
 		add_assoc_zval(return_value, queries_indices[i], query_result_zv);
 	}
