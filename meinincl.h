@@ -1,12 +1,14 @@
-// Bereits in zend_engine definiert . #define _XOPEN_SOURCE // for mktime, gmtime, strptime, strftime
+// bereits in zend_engine definiert . #define _XOPEN_SOURCE // for mktime, gmtime, strptime, strftime
 // Bereits in zend_engine definiert . #define _GNU_SOURCE // for sched_getcpu
+#define _XOPEN_SOURCE
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
 #include <string.h>
 #include <pthread.h>
-#include <mysql.h>
+#include <mysql/mysql.h>
 #include <time.h>
 #include <sched.h>
 

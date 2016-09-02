@@ -138,7 +138,7 @@ PHP_FUNCTION(doqueries)
 		zval ** csvcol_zvpp;
 		zval ** discrcol_zvpp;
 		zval ** datecol_zvpp;
-		if (zend_hash_find(csvdata_htp, "csv", sizeof("csv"), (void **) &csvcol_zvpp)) { RETURN_NULL();}		
+		if (zend_hash_find(csvdata_htp, "csv", sizeof("csv"), (void **) &csvcol_zvpp)) { RETURN_NULL();}
 		if (zend_hash_find(csvdata_htp, "discr", sizeof("discr"),  (void **) &discrcol_zvpp)) { RETURN_NULL();}
 		if (zend_hash_find(csvdata_htp, "date", sizeof("date"), (void **) &datecol_zvpp)) { RETURN_NULL();}
 		if((**csvcol_zvpp).type != IS_LONG){convert_to_long(*csvcol_zvpp);}
@@ -215,9 +215,9 @@ PHP_FUNCTION(doqueries)
 
 	mysql_library_end();
 
-	for (t = 0; t < num_threads; t++) {
-		printNullTerm3DCmtrx(all_data[t]);
-	}
+//	for (t = 0; t < num_threads; t++) {
+//		printNullTerm3DCmtrx(all_data[t]);
+//	}
 
 
 
@@ -246,7 +246,8 @@ PHP_FUNCTION(doqueries)
 				zval * row_result_zv;
 				int c = 0;
 				while(query_result[r][d][c] != NULL){
-					add_next_index_string(row_result_zv, query_result[r][d][c], 1);
+					php_printf(" Now adding %s \n", query_result[r][d][c]);
+					add_next_index_string(row_result_zv, "somval", 1);
 					c++;
 				}
 
@@ -291,7 +292,7 @@ PHP_FUNCTION(doqueries)
 */
 PHP_MINIT_FUNCTION(psql)
 {
-	/* If you have INI entries, uncomment these lines 
+	/* If you have INI entries, uncomment these lines
 	   REGISTER_INI_ENTRIES();
 	   */
 	return SUCCESS;

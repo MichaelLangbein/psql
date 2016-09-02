@@ -1,0 +1,244 @@
+==14252== Memcheck, a memory error detector
+==14252== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14252== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==14252== Command: /usr/local/bin/php psql_adj.php
+==14252== Parent PID: 12482
+==14252== 
+--14252-- 
+--14252-- Valgrind options:
+--14252--    -v
+--14252--    --log-file=val.log
+--14252-- Contents of /proc/version:
+--14252--   Linux version 3.13.0-32-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+--14252-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-sse3
+--14252-- Page sizes: currently 4096, max supported 4096
+--14252-- Valgrind library directory: /usr/lib/valgrind
+--14252-- Reading syms from /usr/local/bin/php
+--14252-- Reading syms from /lib/x86_64-linux-gnu/ld-2.19.so
+--14252--   Considering /lib/x86_64-linux-gnu/ld-2.19.so ..
+--14252--   .. CRC mismatch (computed 46abf574 wanted 3ca2d3ca)
+--14252--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.19.so ..
+--14252--   .. CRC is valid
+--14252-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--14252--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--14252--   .. CRC mismatch (computed 4f1eed43 wanted a323a3ab)
+--14252--    object doesn't have a symbol table
+--14252--    object doesn't have a dynamic symbol table
+--14252-- Scheduler: using generic scheduler lock implementation.
+--14252-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==14252== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-14252-by-hnd-on-???
+==14252== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-14252-by-hnd-on-???
+==14252== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-14252-by-hnd-on-???
+==14252== 
+==14252== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==14252== don't want to do, unless you know exactly what you're doing,
+==14252== or are doing some strange experiment):
+==14252==   /usr/lib/valgrind/../../bin/vgdb --pid=14252 ...command...
+==14252== 
+==14252== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==14252==   /path/to/gdb /usr/local/bin/php
+==14252== and then give GDB the following command
+==14252==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=14252
+==14252== --pid is optional if only one valgrind process is running
+==14252== 
+--14252-- REDIR: 0x4019c50 (ld-linux-x86-64.so.2:strlen) redirected to 0x380764b1 (???)
+--14252-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--14252--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--14252--   .. CRC mismatch (computed fc68135e wanted 45f5e986)
+--14252--    object doesn't have a symbol table
+--14252-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--14252--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--14252--   .. CRC mismatch (computed ae683f7e wanted 08c06df2)
+--14252--    object doesn't have a symbol table
+==14252== WARNING: new redirection conflicts with existing -- ignoring it
+--14252--     old: 0x04019c50 (strlen              ) R-> (0000.0) 0x380764b1 ???
+--14252--     new: 0x04019c50 (strlen              ) R-> (2007.0) 0x04c2e1a0 strlen
+--14252-- REDIR: 0x4019a00 (ld-linux-x86-64.so.2:index) redirected to 0x4c2dd50 (index)
+--14252-- REDIR: 0x4019c20 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2f2f0 (strcmp)
+--14252-- REDIR: 0x401a970 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31da0 (mempcpy)
+--14252-- Reading syms from /lib/x86_64-linux-gnu/libresolv-2.19.so
+--14252--   Considering /lib/x86_64-linux-gnu/libresolv-2.19.so ..
+--14252--   .. CRC mismatch (computed b2c0b317 wanted 63fc9f84)
+--14252--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libresolv-2.19.so ..
+--14252--   .. CRC is valid
+--14252-- Reading syms from /lib/x86_64-linux-gnu/libm-2.19.so
+--14252--   Considering /lib/x86_64-linux-gnu/libm-2.19.so ..
+--14252--   .. CRC mismatch (computed 08659659 wanted 7ce1b39a)
+--14252--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.19.so ..
+--14252--   .. CRC is valid
+--14252-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.19.so
+--14252--   Considering /lib/x86_64-linux-gnu/libdl-2.19.so ..
+--14252--   .. CRC mismatch (computed 5e07a82d wanted c608f377)
+--14252--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libdl-2.19.so ..
+--14252--   .. CRC is valid
+--14252-- Reading syms from /usr/lib/x86_64-linux-gnu/libxml2.so.2.9.1
+--14252--    object doesn't have a symbol table
+--14252-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.19.so
+--14252--   Considering /lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--14252--   .. CRC mismatch (computed 88040ace wanted 71b58165)
+--14252--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--14252--   .. CRC is valid
+--14252-- Reading syms from /lib/x86_64-linux-gnu/libc-2.19.so
+--14252--   Considering /lib/x86_64-linux-gnu/libc-2.19.so ..
+--14252--   .. CRC mismatch (computed ac9b5ddb wanted a10d05bf)
+--14252--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.19.so ..
+--14252--   .. CRC is valid
+--14252-- Reading syms from /lib/x86_64-linux-gnu/libz.so.1.2.8
+--14252--    object doesn't have a symbol table
+--14252-- Reading syms from /lib/x86_64-linux-gnu/liblzma.so.5.0.0
+--14252--    object doesn't have a symbol table
+--14252-- REDIR: 0x5b6dc50 (libc.so.6:strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b6ff40 (libc.so.6:strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b6d420 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b6b670 (libc.so.6:strncpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b69dd0 (libc.so.6:strncmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b693f0 (libc.so.6:strcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b6daa0 (libc.so.6:stpcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b67d10 (libc.so.6:index) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b6ce50 (libc.so.6:bcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b67f60 (libc.so.6:strcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5be99e0 (libc.so.6:__memmove_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5be9990 (libc.so.6:__memcpy_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b72620 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b67b10 (libc.so.6:strcat) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b6b6b0 (libc.so.6:rindex) redirected to 0x4c2da30 (rindex)
+--14252-- REDIR: 0x5b699b0 (libc.so.6:strlen) redirected to 0x4c2e0e0 (strlen)
+--14252-- REDIR: 0x5b63660 (libc.so.6:malloc) redirected to 0x4c2ab10 (malloc)
+--14252-- REDIR: 0x5b72670 (libc.so.6:__GI_memcpy) redirected to 0x4c2fc90 (__GI_memcpy)
+--14252-- REDIR: 0x5b78ec0 (libc.so.6:__memcpy_sse2_unaligned) redirected to 0x4c2f6b0 (memcpy@@GLIBC_2.14)
+--14252-- REDIR: 0x5b64130 (libc.so.6:calloc) redirected to 0x4c2cbf0 (calloc)
+--14252-- REDIR: 0x5b63e00 (libc.so.6:realloc) redirected to 0x4c2ce10 (realloc)
+--14252-- REDIR: 0x5b6d4b0 (libc.so.6:memset) redirected to 0x4c31350 (memset)
+--14252-- REDIR: 0x5b69e20 (libc.so.6:__GI_strncmp) redirected to 0x4c2e930 (__GI_strncmp)
+--14252-- REDIR: 0x5b63d00 (libc.so.6:free) redirected to 0x4c2bd80 (free)
+--14252-- REDIR: 0x5c40c60 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c30c00 (__memcmp_sse4_1)
+--14252-- REDIR: 0x5b67fa0 (libc.so.6:__GI_strcmp) redirected to 0x4c2f200 (__GI_strcmp)
+--14252-- REDIR: 0x5b6cb00 (libc.so.6:memchr) redirected to 0x4c2f390 (memchr)
+--14252-- REDIR: 0x5b67d40 (libc.so.6:__GI_strchr) redirected to 0x4c2db90 (__GI_strchr)
+--14252-- REDIR: 0x5b6dae0 (libc.so.6:__GI_stpcpy) redirected to 0x4c30da0 (__GI_stpcpy)
+--14252-- REDIR: 0x5b6c300 (libc.so.6:__GI_strstr) redirected to 0x4c32030 (__strstr_sse2)
+--14252-- REDIR: 0x5b6ce90 (libc.so.6:__GI_memcmp) redirected to 0x4c30b80 (__GI_memcmp)
+--14252-- REDIR: 0x5b69430 (libc.so.6:__GI_strcpy) redirected to 0x4c2e2a0 (__GI_strcpy)
+--14252-- REDIR: 0x5c358f0 (libc.so.6:__strncasecmp_ssse3) redirected to 0x4c2eb60 (strncasecmp)
+--14252-- REDIR: 0x5c337a0 (libc.so.6:__strcasecmp_ssse3) redirected to 0x4c2ea80 (strcasecmp)
+--14252-- Reading syms from /usr/local/lib/php/extensions/debug-zts-20131226/psql.so
+--14252-- Reading syms from /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0
+--14252--    object doesn't have a symbol table
+--14252-- REDIR: 0x5b6c8c0 (libc.so.6:strstr) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--14252-- REDIR: 0x5b78c10 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c2f1b0 (strcmp)
+--14252-- Reading syms from /usr/local/lib/php/extensions/debug-zts-20131226/testmodul.so
+--14252-- REDIR: 0xffffffffff600400 (???:???) redirected to 0x3807649d (???)
+--14252-- REDIR: 0xffffffffff600000 (???:???) redirected to 0x38076493 (???)
+--14252-- REDIR: 0x5c22060 (libc.so.6:__strncmp_ssse3) redirected to 0x4c2e8c0 (strncmp)
+--14252-- REDIR: 0x5b82120 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4c31fa0 (strstr)
+--14252-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
+--14252--   Considering /lib/x86_64-linux-gnu/libgcc_s.so.1 ..
+--14252--   .. CRC mismatch (computed 6116126e wanted 54e3f1f2)
+--14252--    object doesn't have a symbol table
+--14252-- REDIR: 0x5b7da80 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2e1c0 (strcpy)
+--14252-- REDIR: 0x5b749b0 (libc.so.6:strchrnul) redirected to 0x4c319b0 (strchrnul)
+--14252-- Reading syms from /lib/x86_64-linux-gnu/libnss_files-2.19.so
+--14252--   Considering /lib/x86_64-linux-gnu/libnss_files-2.19.so ..
+--14252--   .. CRC mismatch (computed 69b3fb24 wanted 71fe8a31)
+--14252--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libnss_files-2.19.so ..
+--14252--   .. CRC is valid
+--14252-- REDIR: 0x5b747a0 (libc.so.6:rawmemchr) redirected to 0x4c319f0 (rawmemchr)
+--14252-- REDIR: 0x5c30c90 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2f450 (memcpy@GLIBC_2.2.5)
+--14252-- REDIR: 0xffffffffff600800 (???:???) redirected to 0x380764a7 (???)
+--14252-- REDIR: 0x5b69b70 (libc.so.6:strnlen) redirected to 0x4c2e080 (strnlen)
+==14252== Use of uninitialised value of size 8
+==14252==    at 0x8B635F: add_next_index_string (zend_API.c:1452)
+==14252==    by 0x6D0EDE5: zif_doqueries (psql.c:250)
+==14252==    by 0x8FD368: zend_do_fcall_common_helper_SPEC (zend_vm_execute.h:558)
+==14252==    by 0x903E96: ZEND_DO_FCALL_SPEC_CONST_HANDLER (zend_vm_execute.h:2602)
+==14252==    by 0x8FC5C1: execute_ex (zend_vm_execute.h:363)
+==14252==    by 0x8FC6A7: zend_execute (zend_vm_execute.h:388)
+==14252==    by 0x8AF87B: zend_execute_scripts (zend.c:1341)
+==14252==    by 0x7EC112: php_execute_script (main.c:2613)
+==14252==    by 0x9798E6: do_cli (php_cli.c:994)
+==14252==    by 0x97AF38: main (php_cli.c:1378)
+==14252== 
+==14252== Invalid read of size 8
+==14252==    at 0x8B635F: add_next_index_string (zend_API.c:1452)
+==14252==    by 0x6D0EDE5: zif_doqueries (psql.c:250)
+==14252==    by 0x8FD368: zend_do_fcall_common_helper_SPEC (zend_vm_execute.h:558)
+==14252==    by 0x903E96: ZEND_DO_FCALL_SPEC_CONST_HANDLER (zend_vm_execute.h:2602)
+==14252==    by 0x8FC5C1: execute_ex (zend_vm_execute.h:363)
+==14252==    by 0x8FC6A7: zend_execute (zend_vm_execute.h:388)
+==14252==    by 0x8AF87B: zend_execute_scripts (zend.c:1341)
+==14252==    by 0x7EC112: php_execute_script (main.c:2613)
+==14252==    by 0x9798E6: do_cli (php_cli.c:994)
+==14252==    by 0x97AF38: main (php_cli.c:1378)
+==14252==  Address 0xd is not stack'd, malloc'd or (recently) free'd
+==14252== 
+==14252== 
+==14252== Process terminating with default action of signal 11 (SIGSEGV)
+==14252==  Access not within mapped region at address 0xD
+==14252==    at 0x8B635F: add_next_index_string (zend_API.c:1452)
+==14252==    by 0x6D0EDE5: zif_doqueries (psql.c:250)
+==14252==    by 0x8FD368: zend_do_fcall_common_helper_SPEC (zend_vm_execute.h:558)
+==14252==    by 0x903E96: ZEND_DO_FCALL_SPEC_CONST_HANDLER (zend_vm_execute.h:2602)
+==14252==    by 0x8FC5C1: execute_ex (zend_vm_execute.h:363)
+==14252==    by 0x8FC6A7: zend_execute (zend_vm_execute.h:388)
+==14252==    by 0x8AF87B: zend_execute_scripts (zend.c:1341)
+==14252==    by 0x7EC112: php_execute_script (main.c:2613)
+==14252==    by 0x9798E6: do_cli (php_cli.c:994)
+==14252==    by 0x97AF38: main (php_cli.c:1378)
+==14252==  If you believe this happened as a result of a stack
+==14252==  overflow in your program's main thread (unlikely but
+==14252==  possible), you can try to increase the size of the
+==14252==  main thread stack using the --main-stacksize= flag.
+==14252==  The main thread stack size used in this run was 8388608.
+--14252-- Discarding syms at 0x7e50ab0-0x7e60985 in /lib/x86_64-linux-gnu/libgcc_s.so.1 due to munmap()
+--14252-- Discarding syms at 0x80662a0-0x806beb3 in /lib/x86_64-linux-gnu/libnss_files-2.19.so due to munmap()
+==14252== 
+==14252== HEAP SUMMARY:
+==14252==     in use at exit: 2,612,933 bytes in 20,071 blocks
+==14252==   total heap usage: 20,987 allocs, 916 frees, 2,965,423 bytes allocated
+==14252== 
+==14252== Searching for pointers to 20,071 not-freed blocks
+==14252== Checked 1,996,496 bytes
+==14252== 
+==14252== LEAK SUMMARY:
+==14252==    definitely lost: 0 bytes in 0 blocks
+==14252==    indirectly lost: 0 bytes in 0 blocks
+==14252==      possibly lost: 0 bytes in 0 blocks
+==14252==    still reachable: 2,612,933 bytes in 20,071 blocks
+==14252==         suppressed: 0 bytes in 0 blocks
+==14252== Rerun with --leak-check=full to see details of leaked memory
+==14252== 
+==14252== Use --track-origins=yes to see where uninitialised values come from
+==14252== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 1 from 1)
+==14252== 
+==14252== 1 errors in context 1 of 2:
+==14252== Invalid read of size 8
+==14252==    at 0x8B635F: add_next_index_string (zend_API.c:1452)
+==14252==    by 0x6D0EDE5: zif_doqueries (psql.c:250)
+==14252==    by 0x8FD368: zend_do_fcall_common_helper_SPEC (zend_vm_execute.h:558)
+==14252==    by 0x903E96: ZEND_DO_FCALL_SPEC_CONST_HANDLER (zend_vm_execute.h:2602)
+==14252==    by 0x8FC5C1: execute_ex (zend_vm_execute.h:363)
+==14252==    by 0x8FC6A7: zend_execute (zend_vm_execute.h:388)
+==14252==    by 0x8AF87B: zend_execute_scripts (zend.c:1341)
+==14252==    by 0x7EC112: php_execute_script (main.c:2613)
+==14252==    by 0x9798E6: do_cli (php_cli.c:994)
+==14252==    by 0x97AF38: main (php_cli.c:1378)
+==14252==  Address 0xd is not stack'd, malloc'd or (recently) free'd
+==14252== 
+==14252== 
+==14252== 1 errors in context 2 of 2:
+==14252== Use of uninitialised value of size 8
+==14252==    at 0x8B635F: add_next_index_string (zend_API.c:1452)
+==14252==    by 0x6D0EDE5: zif_doqueries (psql.c:250)
+==14252==    by 0x8FD368: zend_do_fcall_common_helper_SPEC (zend_vm_execute.h:558)
+==14252==    by 0x903E96: ZEND_DO_FCALL_SPEC_CONST_HANDLER (zend_vm_execute.h:2602)
+==14252==    by 0x8FC5C1: execute_ex (zend_vm_execute.h:363)
+==14252==    by 0x8FC6A7: zend_execute (zend_vm_execute.h:388)
+==14252==    by 0x8AF87B: zend_execute_scripts (zend.c:1341)
+==14252==    by 0x7EC112: php_execute_script (main.c:2613)
+==14252==    by 0x9798E6: do_cli (php_cli.c:994)
+==14252==    by 0x97AF38: main (php_cli.c:1378)
+==14252== 
+--14252-- 
+--14252-- used_suppression:      1 dl-hack4-64bit-addr-1 /usr/lib/valgrind/default.supp:1235
+==14252== 
+==14252== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 1 from 1)

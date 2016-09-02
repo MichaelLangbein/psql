@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# 1. Apache braucht kein Kompilieren. 
+# 1. Apache braucht kein Kompilieren.
 #2. Kompilieren von Php
 #  2.1. apt-get install libxml2-dev, libmysqlclient-dev,
 #  2.2. chmod 777 /usr/local/lib
@@ -9,7 +9,7 @@
 #  2.5.  cp php.ini-development /usr/local/lib/php.ini
 #  2.6. extension=psql.so
 #3. Kompilieren der Extension
-#  3.0. Falls Installation nötig: 
+#  3.0. Falls Installation nötig:
 #    3.0.1. ext_skell --module=psql --proto=gekÃrzte headerfile
 #    3.0.2. Anpassen der config.m4: mindestens PHP_ARG_ENABLE und PHP_NEW EXTENSION
 #  3.1. git clone https://github.com/rinso86/psql.git
@@ -24,7 +24,7 @@ moduleentry="extension=${modulename}.so";
 phpexe=$(which php)
 
 
-if [ ! -f $phpdir/php.ini ]; 
+if [ ! -f $phpdir/php.ini ];
 then
 	cp $sourcedir/php.ini-developement $phpdir/php.ini
 fi
@@ -46,5 +46,4 @@ else
 fi
 
 $phpexe ${modulename}.php
-valgrind -v --log-file=${modulename}_valgrind.log $phpexe ${modulename}_adj.php
-
+valgrind -v --log-file=val.log $phpexe ${modulename}_adj.php
