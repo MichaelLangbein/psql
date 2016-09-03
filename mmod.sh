@@ -22,7 +22,7 @@
 
 phpdir="$(php-config --prefix)/lib";
 echo "Phpdir ist ${phpdir}"
-modulesdir="${phpdir}$(php-config --extension-dir)/";
+modulesdir="$(php-config --extension-dir)/";
 echo "Modulesdir ist ${modulesdir}"
 modulename="psql";
 sourcedir="/home/hnd/php-5.5.9/";
