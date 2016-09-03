@@ -11,6 +11,27 @@ welche auf unseren Servern standardmäßig verwendet wird. Vermutlich leakt auch
 5. sudo service apache2 restart
 6. Testen mit psql.php, psql_adj.php
 
+In ungünstigen Fällen weigert sich php mit dieser SO zusammenzuarbeiten. 
+Dann lokal Kompilieren: 
+
+0. cd /home/soda/psql
+1. sudo apt-get install php5-dev (für phpize)
+2. sudo apt-get install libmysqlclient-dev (für libmysqlclient.so)
+3. sudo apt-get install valgrind (zum Testen, nur zur Sicherheit)
+4. phpize --clean
+5. sodo chmod -R 777 /usr/lib/php5 (um Bibliotheken mit einbinden zu können)
+6. ./mmod.sh
+
+Wenn auch das nicht funktioniert, dann als dl verwenden. Dazu: 
+
+1. In /etc/php5/apache2/php.ini und /etc/php5/cli/php.ini die Direktive "enable_dl = On" setzen.
+2. ./mmod
+3. Modul immer erst laden mit dem code-snippet:
+	if(!extension_loaded('psql')) {
+        	dl('psql.' . PHP_SHLIB_SUFFIX);
+	}
+
+
 PSQL : Funktionsweise
 ========================
 
