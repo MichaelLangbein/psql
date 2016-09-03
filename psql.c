@@ -220,7 +220,6 @@ PHP_FUNCTION(doqueries)
 //	}
 
 
-
 	/*SCHRITT 3: c-array zu PHP-Output
 	  Wir bereiten schon mal den return value vor
 	  Was hier passiert ist folgendes:

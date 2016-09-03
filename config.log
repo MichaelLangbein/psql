@@ -196,13 +196,13 @@ configure:3770: result: /usr/local
 configure:3772: checking for PHP includes
 configure:3774: result: -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib
 configure:3776: checking for PHP extension directory
-configure:3778: result: /usr/local/lib/php/extensions/debug-zts-20121212
+configure:3778: result: /usr/local/lib/php/extensions/no-debug-non-zts-20121212
 configure:3780: checking for PHP installed headers prefix
 configure:3782: result: /usr/local/include/php
 configure:3785: checking if debug is enabled
-configure:3811: result: yes
+configure:3811: result: no
 configure:3814: checking if zts is enabled
-configure:3840: result: yes
+configure:3840: result: no
 configure:3911: checking for re2c
 configure:3941: result: no
 configure:3966: WARNING: You will need re2c 0.13.4 or later if you want to regenerate PHP parsers.
@@ -213,7 +213,7 @@ configure:4052: checking Erlaube PSQL-Modul
 configure:4092: result: yes, shared
 configure:4115: result: libmysqlclient.so gefunden in /usr/lib/x86_64-linux-gnu.
 configure:4217: checking for mysql_close in -lmysqlclient
-configure:4242: cc -o conftest -g  -O0  -Wl,-rpath,/usr/lib/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu  conftest.c -lmysqlclient   >&5
+configure:4242: cc -o conftest -g -O2  -Wl,-rpath,/usr/lib/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu  conftest.c -lmysqlclient   >&5
 configure:4242: $? = 0
 configure:4251: result: yes
 configure:4407: result: Wow, bis hierhin hat alles geklappt! MySQL wurde zu PHP hinzugefügt.
@@ -235,54 +235,54 @@ configure:5094: checking whether ln -s works
 configure:5098: result: yes
 configure:5105: checking how to recognize dependent libraries
 configure:5291: result: pass_all
-configure:5376: cc -c -g  -O0  conftest.c >&5
+configure:5376: cc -c -g -O2  conftest.c >&5
 configure:5379: $? = 0
 configure:5503: checking for ANSI C header files
-configure:5523: cc -c -g  -O0  conftest.c >&5
+configure:5523: cc -c -g -O2  conftest.c >&5
 configure:5523: $? = 0
-configure:5596: cc -o conftest -g  -O0   conftest.c  >&5
+configure:5596: cc -o conftest -g -O2   conftest.c  >&5
 configure:5596: $? = 0
 configure:5596: ./conftest
 configure:5596: $? = 0
 configure:5607: result: yes
 configure:5620: checking for sys/types.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5620: checking for sys/stat.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5620: checking for stdlib.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5620: checking for string.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5620: checking for memory.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5620: checking for strings.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5620: checking for inttypes.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5620: checking for stdint.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5620: checking for unistd.h
-configure:5620: cc -c -g  -O0  conftest.c >&5
+configure:5620: cc -c -g -O2  conftest.c >&5
 configure:5620: $? = 0
 configure:5620: result: yes
 configure:5634: checking dlfcn.h usability
-configure:5634: cc -c -g  -O0  conftest.c >&5
+configure:5634: cc -c -g -O2  conftest.c >&5
 configure:5634: $? = 0
 configure:5634: result: yes
 configure:5634: checking dlfcn.h presence
@@ -294,11 +294,11 @@ configure:5634: result: yes
 configure:5656: checking the maximum length of command line arguments
 configure:5768: result: 1572864
 configure:5780: checking command to parse /usr/bin/nm -B output from cc object
-configure:5885: cc -c -g  -O0  conftest.c >&5
+configure:5885: cc -c -g -O2  conftest.c >&5
 configure:5888: $? = 0
 configure:5892: /usr/bin/nm -B conftest.o \| sed -n -e 's/^.*[ 	]\([ABCDGIRSTW][ABCDGIRSTW]*\)[ 	][ 	]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' \> conftest.nm
 configure:5895: $? = 0
-configure:5947: cc -o conftest -g  -O0   conftest.c conftstm.o >&5
+configure:5947: cc -o conftest -g -O2   conftest.c conftstm.o >&5
 configure:5950: $? = 0
 configure:5988: result: ok
 configure:5992: checking for objdir
@@ -313,26 +313,26 @@ configure:6283: checking for strip
 configure:6299: found /usr/bin/strip
 configure:6310: result: strip
 configure:6879: checking if cc supports -fno-rtti -fno-exceptions
-configure:6897: cc -c -g  -O0  -fno-rtti -fno-exceptions conftest.c >&5
+configure:6897: cc -c -g -O2  -fno-rtti -fno-exceptions conftest.c >&5
 cc1: warning: command line option '-fno-rtti' is valid for C++/ObjC++ but not for C [enabled by default]
 configure:6901: $? = 0
 configure:6914: result: no
 configure:6929: checking for cc option to produce PIC
 configure:7169: result: -fPIC
 configure:7177: checking if cc PIC flag -fPIC works
-configure:7195: cc -c -g  -O0  -fPIC -DPIC conftest.c >&5
+configure:7195: cc -c -g -O2  -fPIC -DPIC conftest.c >&5
 configure:7199: $? = 0
 configure:7212: result: yes
 configure:7240: checking if cc static flag -static works
 configure:7268: result: yes
 configure:7278: checking if cc supports -c -o file.o
-configure:7299: cc -c -g  -O0  -o out/conftest2.o conftest.c >&5
+configure:7299: cc -c -g -O2  -o out/conftest2.o conftest.c >&5
 configure:7303: $? = 0
 configure:7325: result: yes
 configure:7351: checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
 configure:8283: result: yes
 configure:8304: checking whether -lc should be explicitly linked in
-configure:8309: cc -c -g  -O0  conftest.c >&5
+configure:8309: cc -c -g -O2  conftest.c >&5
 configure:8312: $? = 0
 configure:8327: cc -shared conftest.o  -v -Wl,-soname -Wl,conftest -o conftest 2\>\&1 \| grep  -lc  \>/dev/null 2\>\&1
 configure:8330: $? = 0
@@ -454,7 +454,7 @@ php_cv_cc_rpath=yes
 AR='ar'
 AWK='gawk'
 CC='cc'
-CFLAGS='-g  -O0'
+CFLAGS='-g -O2'
 CONFIGURE_COMMAND=' '\''./configure'\'' '
 CONFIGURE_OPTIONS=''
 CPP='cc -E'

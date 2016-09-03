@@ -2,6 +2,12 @@
 // Bereits in zend_engine definiert . #define _GNU_SOURCE // for sched_getcpu
 //#define _XOPEN_SOURCE
 //#define _GNU_SOURCE
+//
+#include "php.h"
+#include "php_ini.h"
+#include "ext/standard/info.h"
+#include "php_psql.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>

@@ -80,10 +80,10 @@ int ** nullTermMtrx(){
 	int M = 3;
 	int n, m;
 
-	int ** mtrx_pp = (int **)malloc((N + 1) * sizeof(int *));
+	int ** mtrx_pp = (int **)emalloc((N + 1) * sizeof(int *));
 
 	for (n = 0; n < N; n++) {
-		mtrx_pp[n] = (int *)malloc((M + 1) * sizeof(int));
+		mtrx_pp[n] = (int *)emalloc((M + 1) * sizeof(int));
 		for (m = 0; m < M; m++) {
 			mtrx_pp[n][m] = n*M + m + 1;
 		}
@@ -124,10 +124,10 @@ void freeNullTermMtrx(int ** mtrx_pp){
 	n = 0;
 	while(mtrx_pp[n] != NULL){
 		mtrx_p = mtrx_pp[n];
-		free(mtrx_p);
+		efree(mtrx_p);
 		n++;
 	}
-	free(mtrx_pp);
+	efree(mtrx_pp);
 }
 
 
@@ -137,12 +137,12 @@ char *** nullTermCmtrx(){
 	int n, m;
 	char * txt = "hallo";
 
-	char *** cmtrx_ppp = (char ***)malloc((N + 1) * sizeof(char **));
+	char *** cmtrx_ppp = (char ***)emalloc((N + 1) * sizeof(char **));
 
 	for (n = 0; n < N; n++) {
-		cmtrx_ppp[n] = (char **)malloc((M + 1) * sizeof(char *));
+		cmtrx_ppp[n] = (char **)emalloc((M + 1) * sizeof(char *));
 		for (m = 0; m < M; m++) {
-			cmtrx_ppp[n][m] = (char *)malloc((strlen(txt) + 1) * sizeof(char));
+			cmtrx_ppp[n][m] = (char *)emalloc((strlen(txt) + 1) * sizeof(char));
 			strcpy(cmtrx_ppp[n][m], txt);
 		}
 		cmtrx_ppp[n][M] = NULL;
@@ -187,13 +187,13 @@ void freeNullTermCmtrx(char *** cmtrx_ppp){
 		m=0;
 		while(cmtrx_pp[m] != NULL){
 			cmtrx_p = cmtrx_pp[m];
-			free(cmtrx_p);
+			efree(cmtrx_p);
 			m++;
 		}
-		free(cmtrx_pp);
+		efree(cmtrx_pp);
 		n++;
 	}
-	free(cmtrx_ppp);
+	efree(cmtrx_ppp);
 }
 
 
@@ -241,19 +241,19 @@ void freeNullTerm3DCmtrx(char **** cmtrx_pppp){
 			l=0;  // for each column ...
 			while(cmtrx_pp[l] != NULL){
 				cmtrx_p = cmtrx_pp[l];
-				free(cmtrx_p);
+				efree(cmtrx_p);
 				l++;
 			}  // ... end for each column
-			//free(cmtrx_pp[l]);
-			free(cmtrx_pp);
+			//efree(cmtrx_pp[l]);
+			efree(cmtrx_pp);
 			m++;
 		}   // ... end for each csv element
-		//free(cmtrx_ppp[m]);
-		free(cmtrx_ppp);
+		//efree(cmtrx_ppp[m]);
+		efree(cmtrx_ppp);
 		n++;
 	}   // ... end for each mysql-result line
-	//free(cmtrx_pppp[n]);
-	free(cmtrx_pppp);
+	//efree(cmtrx_pppp[n]);
+	efree(cmtrx_pppp);
 }
 
 
@@ -296,7 +296,7 @@ char * getAllocDate(time_t tstp, int offset){
 		printf("Wow! Das Datum %s hat %i bytes", datumzeit, (int)size);
 	}
 
-	char * dateLocation = malloc( sizeof(datumzeit) );
+	char * dateLocation = emalloc( sizeof(datumzeit) );
 	strcpy(dateLocation, datumzeit);
 	return dateLocation;
 }
@@ -313,7 +313,7 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 	char * datetimeLocation;
 
 
-	char **** cmtrx_pppp = (char ****)malloc((num_rows + 1) * sizeof(char ***));
+	char **** cmtrx_pppp = (char ****)emalloc((num_rows + 1) * sizeof(char ***));
 
 	for (r = 0; r < num_rows; r++) {
 		row = mysql_fetch_row(reslt);
@@ -324,17 +324,17 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 		date_tstp = getTstp(date, "%Y-%m-%d");
 
 		num_steps = 1440 / discr;
-		cmtrx_pppp[r] = (char ***)malloc((num_steps + 1) * sizeof(char **));
+		cmtrx_pppp[r] = (char ***)emalloc((num_steps + 1) * sizeof(char **));
 
 		for (d = 0; d < num_steps; d++) {
 
 			entry = csvstring;
 			csvstring = cutOffToken(csvstring, ";");
-			cmtrx_pppp[r][d] = (char **)malloc( (1 + num_cols) * sizeof(char *) );
+			cmtrx_pppp[r][d] = (char **)emalloc( (1 + num_cols) * sizeof(char *) );
 
 			for(c = 0; c<num_cols; c++){
 				if(c == csv->csvcol){
-					cmtrx_pppp[r][d][c] = (char *)malloc( (strlen(entry) + 1) * sizeof(char) );
+					cmtrx_pppp[r][d][c] = (char *)emalloc( (strlen(entry) + 1) * sizeof(char) );
 					strcpy( cmtrx_pppp[r][d][c], entry );
 				}
 				else if(c == csv->datecol){
@@ -342,7 +342,7 @@ char **** allocSplitRows(MYSQL_RES * reslt, int num_rows, int num_cols, csv_para
 					cmtrx_pppp[r][d][c] = datetimeLocation;
 				}
 				else{
-					cmtrx_pppp[r][d][c] = (char *)malloc( (strlen(row[c]) + 1) * sizeof(char) );
+					cmtrx_pppp[r][d][c] = (char *)emalloc( (strlen(row[c]) + 1) * sizeof(char) );
 					strcpy( cmtrx_pppp[r][d][c], row[c] );
 				}
 			}
@@ -368,8 +368,8 @@ void* do_query(void* tp){
 
 
 	char *query = thrpar->query;
-	int cpu = sched_getcpu();
-	printf("Thread auf core %i wird gleich folgenden Query ausführen:  %s\n", cpu, query);
+	//int cpu = sched_getcpu();
+	//printf("Thread auf core %i wird gleich folgenden Query ausführen:  %s\n", cpu, query);
 
 	/* Wir holen das Ergebnis in Modus "1", also als "store_result".
 	   Wir wollen die Daten nämlich schnell von MySQL-Server runter haben, damit der wieder

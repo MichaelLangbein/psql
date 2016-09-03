@@ -1,14 +1,17 @@
-PSQL : Short-Term-Goals:
+PSQL : Installation 
 ========================
 
-1. Funktion error aus myincl rauszunehmen und für php umschreiben
-2. Versichere, dass wechsel von malloc zu emalloc gut geklappt hat. 
-3. Übergebe die db-creds als persistente Parameter. MaW: sollen einmal pro Apache-Prozess von php aus
-   gesetzt werden, und danach (als globals?) innerhalb des Moduls fortbestehen. 
-4. Zend-Engine erwartet immer noch nur einen Eingangsparameter, mit den dbcreds haben wir aber 2. Wo kann man das anpassen?
+Anmerkung: Dieses modul wurde für die Thread-save Version von PHP entwickelt (siehe master branch). Der branch 2012 ist ein backport auf php 5.5.9 API 2012-NTS,
+welche auf unseren Servern standardmäßig verwendet wird. Vermutlich leakt auch dieser port kein memory, das muss aber noch ausfühlicher getestet werden.
 
+1. Installiere git; eventuell noch für proxy konfigurieren: "git config --global http.proxy http://www.proxy.bybn.de:80"
+2. Mit phpinfo() das Extension-Verzeichnis-Suchen. Üblicherweise "/usr/lib/php5/20121212"
+3. Kopiere psql/modules/psql.so in Extension-Verzeichnis.
+4. php.ini: Hinzufügen: "extension=psql.so"
+5. sudo service apache2 restart
+6. Testen mit psql.php, psql_adj.php
 
-PSQL : Long-Term-Goals:
+PSQL : Funktionsweise
 ========================
 
 1. Abfrage beliebiger queries in parallel

@@ -21,7 +21,7 @@
 #	3. (gdb) run psql_adj.php
 
 phpdir="/usr/local/lib";
-modulesdir="${phpdir}/php/extensions/debug-zts-20121212/";
+modulesdir="${phpdir}/php/extensions/no-debug-non-zts-20121212/";
 modulename="psql";
 sourcedir="/home/hnd/php-5.5.9/";
 moduleentry="extension=${modulename}.so";
