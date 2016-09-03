@@ -20,8 +20,10 @@
 #	2. (gdb) break psql.c:84
 #	3. (gdb) run psql_adj.php
 
-phpdir="/usr/local/lib";
-modulesdir="${phpdir}/php/extensions/no-debug-non-zts-20121212/";
+phpdir="$(php-config --prefix)/lib";
+echo "Phpdir ist ${phpdir}"
+modulesdir="${phpdir}$(php-config --extension-dir)/";
+echo "Modulesdir ist ${modulesdir}"
 modulename="psql";
 sourcedir="/home/hnd/php-5.5.9/";
 moduleentry="extension=${modulename}.so";

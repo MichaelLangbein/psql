@@ -1,259 +1,259 @@
-==5150== Memcheck, a memory error detector
-==5150== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==5150== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==5150== Command: /usr/local/bin/php psql_adj.php ?
-==5150== Parent PID: 2608
-==5150== 
---5150-- 
---5150-- Valgrind options:
---5150--    -v
---5150--    --show-leak-kinds=all
---5150--    --leak-check=full
---5150--    --log-file=val.log
---5150-- Contents of /proc/version:
---5150--   Linux version 3.13.0-32-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
---5150-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-sse3
---5150-- Page sizes: currently 4096, max supported 4096
---5150-- Valgrind library directory: /usr/lib/valgrind
---5150-- Reading syms from /usr/local/bin/php
---5150-- Reading syms from /lib/x86_64-linux-gnu/ld-2.19.so
---5150--   Considering /lib/x86_64-linux-gnu/ld-2.19.so ..
---5150--   .. CRC mismatch (computed 46abf574 wanted 3ca2d3ca)
---5150--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.19.so ..
---5150--   .. CRC is valid
---5150-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
---5150--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
---5150--   .. CRC mismatch (computed 4f1eed43 wanted a323a3ab)
---5150--    object doesn't have a symbol table
---5150--    object doesn't have a dynamic symbol table
---5150-- Scheduler: using generic scheduler lock implementation.
---5150-- Reading suppressions file: /usr/lib/valgrind/default.supp
-==5150== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-5150-by-hnd-on-???
-==5150== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-5150-by-hnd-on-???
-==5150== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-5150-by-hnd-on-???
-==5150== 
-==5150== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==5150== don't want to do, unless you know exactly what you're doing,
-==5150== or are doing some strange experiment):
-==5150==   /usr/lib/valgrind/../../bin/vgdb --pid=5150 ...command...
-==5150== 
-==5150== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==5150==   /path/to/gdb /usr/local/bin/php
-==5150== and then give GDB the following command
-==5150==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=5150
-==5150== --pid is optional if only one valgrind process is running
-==5150== 
---5150-- REDIR: 0x4019c50 (ld-linux-x86-64.so.2:strlen) redirected to 0x380764b1 (???)
---5150-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
---5150--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
---5150--   .. CRC mismatch (computed fc68135e wanted 45f5e986)
---5150--    object doesn't have a symbol table
---5150-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
---5150--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
---5150--   .. CRC mismatch (computed ae683f7e wanted 08c06df2)
---5150--    object doesn't have a symbol table
-==5150== WARNING: new redirection conflicts with existing -- ignoring it
---5150--     old: 0x04019c50 (strlen              ) R-> (0000.0) 0x380764b1 ???
---5150--     new: 0x04019c50 (strlen              ) R-> (2007.0) 0x04c2e1a0 strlen
---5150-- REDIR: 0x4019a00 (ld-linux-x86-64.so.2:index) redirected to 0x4c2dd50 (index)
---5150-- REDIR: 0x4019c20 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2f2f0 (strcmp)
---5150-- REDIR: 0x401a970 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31da0 (mempcpy)
---5150-- Reading syms from /lib/x86_64-linux-gnu/libresolv-2.19.so
---5150--   Considering /lib/x86_64-linux-gnu/libresolv-2.19.so ..
---5150--   .. CRC mismatch (computed b2c0b317 wanted 63fc9f84)
---5150--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libresolv-2.19.so ..
---5150--   .. CRC is valid
---5150-- Reading syms from /lib/x86_64-linux-gnu/libm-2.19.so
---5150--   Considering /lib/x86_64-linux-gnu/libm-2.19.so ..
---5150--   .. CRC mismatch (computed 08659659 wanted 7ce1b39a)
---5150--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.19.so ..
---5150--   .. CRC is valid
---5150-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.19.so
---5150--   Considering /lib/x86_64-linux-gnu/libdl-2.19.so ..
---5150--   .. CRC mismatch (computed 5e07a82d wanted c608f377)
---5150--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libdl-2.19.so ..
---5150--   .. CRC is valid
---5150-- Reading syms from /usr/lib/x86_64-linux-gnu/libxml2.so.2.9.1
---5150--    object doesn't have a symbol table
---5150-- Reading syms from /lib/x86_64-linux-gnu/libc-2.19.so
---5150--   Considering /lib/x86_64-linux-gnu/libc-2.19.so ..
---5150--   .. CRC mismatch (computed ac9b5ddb wanted a10d05bf)
---5150--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.19.so ..
---5150--   .. CRC is valid
---5150-- Reading syms from /lib/x86_64-linux-gnu/libz.so.1.2.8
---5150--    object doesn't have a symbol table
---5150-- Reading syms from /lib/x86_64-linux-gnu/liblzma.so.5.0.0
---5150--    object doesn't have a symbol table
---5150-- REDIR: 0x594fc50 (libc.so.6:strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x5951f40 (libc.so.6:strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x594f420 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x594d670 (libc.so.6:strncpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x594bdd0 (libc.so.6:strncmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x594b3f0 (libc.so.6:strcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x594faa0 (libc.so.6:stpcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x5949d10 (libc.so.6:index) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x594ee50 (libc.so.6:bcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x5949f60 (libc.so.6:strcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x59cb9e0 (libc.so.6:__memmove_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x59cb990 (libc.so.6:__memcpy_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x5954620 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x5949b10 (libc.so.6:strcat) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x594d6b0 (libc.so.6:rindex) redirected to 0x4c2da30 (rindex)
---5150-- REDIR: 0x594b9b0 (libc.so.6:strlen) redirected to 0x4c2e0e0 (strlen)
---5150-- REDIR: 0x5945660 (libc.so.6:malloc) redirected to 0x4c2ab10 (malloc)
---5150-- REDIR: 0x5954670 (libc.so.6:__GI_memcpy) redirected to 0x4c2fc90 (__GI_memcpy)
---5150-- REDIR: 0x595aec0 (libc.so.6:__memcpy_sse2_unaligned) redirected to 0x4c2f6b0 (memcpy@@GLIBC_2.14)
---5150-- REDIR: 0x594be20 (libc.so.6:__GI_strncmp) redirected to 0x4c2e930 (__GI_strncmp)
---5150-- REDIR: 0x594f4b0 (libc.so.6:memset) redirected to 0x4c31350 (memset)
---5150-- REDIR: 0x5945e00 (libc.so.6:realloc) redirected to 0x4c2ce10 (realloc)
---5150-- REDIR: 0x5949fa0 (libc.so.6:__GI_strcmp) redirected to 0x4c2f200 (__GI_strcmp)
---5150-- REDIR: 0x594eb00 (libc.so.6:memchr) redirected to 0x4c2f390 (memchr)
---5150-- REDIR: 0x5949d40 (libc.so.6:__GI_strchr) redirected to 0x4c2db90 (__GI_strchr)
---5150-- REDIR: 0x594fae0 (libc.so.6:__GI_stpcpy) redirected to 0x4c30da0 (__GI_stpcpy)
---5150-- REDIR: 0x5945d00 (libc.so.6:free) redirected to 0x4c2bd80 (free)
---5150-- REDIR: 0x594e300 (libc.so.6:__GI_strstr) redirected to 0x4c32030 (__strstr_sse2)
---5150-- REDIR: 0x594ee90 (libc.so.6:__GI_memcmp) redirected to 0x4c30b80 (__GI_memcmp)
---5150-- REDIR: 0x594b430 (libc.so.6:__GI_strcpy) redirected to 0x4c2e2a0 (__GI_strcpy)
---5150-- REDIR: 0x5a22c60 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c30c00 (__memcmp_sse4_1)
---5150-- REDIR: 0x5a0d6e0 (libc.so.6:__memcpy_chk_ssse3_back) redirected to 0x4c31e90 (__memcpy_chk)
---5150-- REDIR: 0x5a157a0 (libc.so.6:__strcasecmp_ssse3) redirected to 0x4c2ea80 (strcasecmp)
---5150-- REDIR: 0x5946130 (libc.so.6:calloc) redirected to 0x4c2cbf0 (calloc)
---5150-- Reading syms from /usr/local/lib/php/extensions/no-debug-non-zts-20121212/psql.so
---5150-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.19.so
---5150--   Considering /lib/x86_64-linux-gnu/libpthread-2.19.so ..
---5150--   .. CRC mismatch (computed 88040ace wanted 71b58165)
---5150--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libpthread-2.19.so ..
---5150--   .. CRC is valid
---5150-- Reading syms from /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0
---5150--    object doesn't have a symbol table
---5150-- REDIR: 0x594e8c0 (libc.so.6:strstr) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---5150-- REDIR: 0x595ac10 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c2f1b0 (strcmp)
---5150-- REDIR: 0x5a178f0 (libc.so.6:__strncasecmp_ssse3) redirected to 0x4c2eb60 (strncasecmp)
---5150-- REDIR: 0xffffffffff600400 (???:???) redirected to 0x3807649d (???)
---5150-- REDIR: 0xffffffffff600000 (???:???) redirected to 0x38076493 (???)
---5150-- REDIR: 0x5964120 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4c31fa0 (strstr)
---5150-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
---5150--   Considering /lib/x86_64-linux-gnu/libgcc_s.so.1 ..
---5150--   .. CRC mismatch (computed 6116126e wanted 54e3f1f2)
---5150--    object doesn't have a symbol table
---5150-- REDIR: 0x595fa80 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2e1c0 (strcpy)
---5150-- REDIR: 0x59569b0 (libc.so.6:strchrnul) redirected to 0x4c319b0 (strchrnul)
---5150-- Reading syms from /lib/x86_64-linux-gnu/libnss_files-2.19.so
---5150--   Considering /lib/x86_64-linux-gnu/libnss_files-2.19.so ..
---5150--   .. CRC mismatch (computed 69b3fb24 wanted 71fe8a31)
---5150--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libnss_files-2.19.so ..
---5150--   .. CRC is valid
---5150-- REDIR: 0x59567a0 (libc.so.6:rawmemchr) redirected to 0x4c319f0 (rawmemchr)
---5150-- REDIR: 0x5a04060 (libc.so.6:__strncmp_ssse3) redirected to 0x4c2e8c0 (strncmp)
---5150-- REDIR: 0x5a12c90 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2f450 (memcpy@GLIBC_2.2.5)
---5150-- REDIR: 0x59cbc30 (libc.so.6:__strcpy_chk) redirected to 0x4c31a30 (__strcpy_chk)
---5150-- REDIR: 0x594bb70 (libc.so.6:strnlen) redirected to 0x4c2e080 (strnlen)
---5150-- Discarding syms at 0x6aefff0-0x6af1444 in /usr/local/lib/php/extensions/no-debug-non-zts-20121212/psql.so due to munmap()
---5150-- Discarding syms at 0x6f3dcf0-0x6fa4d99 in /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0 due to munmap()
---5150-- Discarding syms at 0x7c4dab0-0x7c5d985 in /lib/x86_64-linux-gnu/libgcc_s.so.1 due to munmap()
---5150-- Discarding syms at 0x7e632a0-0x7e68eb3 in /lib/x86_64-linux-gnu/libnss_files-2.19.so due to munmap()
-==5150== 
-==5150== HEAP SUMMARY:
-==5150==     in use at exit: 1,924 bytes in 6 blocks
-==5150==   total heap usage: 11,921 allocs, 11,915 frees, 3,906,023 bytes allocated
-==5150== 
-==5150== Searching for pointers to 6 not-freed blocks
-==5150== Checked 298,672 bytes
-==5150== 
-==5150== 32 bytes in 1 blocks are still reachable in loss record 1 of 6
-==5150==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5150==    by 0x4015D78: _dl_close_worker (dl-close.c:379)
-==5150==    by 0x401644B: _dl_close (dl-close.c:773)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x535962C: _dlerror_run (dlerror.c:163)
-==5150==    by 0x535910E: dlclose (dlclose.c:46)
-==5150==    by 0x694F23: module_destructor (zend_API.c:2384)
-==5150==    by 0x69A0A4: zend_hash_apply_deleter (zend_hash.c:650)
-==5150==    by 0x69B8A7: zend_hash_graceful_reverse_destroy (zend_hash.c:687)
-==5150==    by 0x68D99D: zend_shutdown (zend.c:817)
-==5150==    by 0x6301DA: php_module_shutdown (main.c:2384)
-==5150==    by 0x425785: main (php_cli.c:1393)
-==5150== 
-==5150== 38 bytes in 1 blocks are still reachable in loss record 2 of 6
-==5150==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5150==    by 0x40090F3: local_strdup (dl-load.c:162)
-==5150==    by 0x40090F3: _dl_map_object (dl-load.c:2509)
-==5150==    by 0x400D5D1: openaux (dl-deps.c:63)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x400DCD4: _dl_map_object_deps (dl-deps.c:254)
-==5150==    by 0x4014A6A: dl_open_worker (dl-open.c:272)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x401437A: _dl_open (dl-open.c:661)
-==5150==    by 0x535902A: dlopen_doit (dlopen.c:66)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x535962C: _dlerror_run (dlerror.c:163)
-==5150==    by 0x53590C0: dlopen@@GLIBC_2.2.5 (dlopen.c:87)
-==5150== 
-==5150== 38 bytes in 1 blocks are still reachable in loss record 3 of 6
-==5150==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5150==    by 0x400BD93: _dl_new_object (dl-object.c:165)
-==5150==    by 0x4006753: _dl_map_object_from_fd (dl-load.c:1059)
-==5150==    by 0x4008DCF: _dl_map_object (dl-load.c:2605)
-==5150==    by 0x400D5D1: openaux (dl-deps.c:63)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x400DCD4: _dl_map_object_deps (dl-deps.c:254)
-==5150==    by 0x4014A6A: dl_open_worker (dl-open.c:272)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x401437A: _dl_open (dl-open.c:661)
-==5150==    by 0x535902A: dlopen_doit (dlopen.c:66)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150== 
-==5150== 176 bytes in 1 blocks are still reachable in loss record 4 of 6
-==5150==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5150==    by 0x4014041: add_to_global (dl-open.c:106)
-==5150==    by 0x4014F0E: dl_open_worker (dl-open.c:582)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x401437A: _dl_open (dl-open.c:661)
-==5150==    by 0x535902A: dlopen_doit (dlopen.c:66)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x535962C: _dlerror_run (dlerror.c:163)
-==5150==    by 0x53590C0: dlopen@@GLIBC_2.2.5 (dlopen.c:87)
-==5150==    by 0x5CE9C1: php_load_extension (dl.c:144)
-==5150==    by 0x68274D: zend_llist_apply (zend_llist.c:191)
-==5150==    by 0x636839: php_ini_register_extensions (php_ini.c:727)
-==5150== 
-==5150== 456 bytes in 1 blocks are still reachable in loss record 5 of 6
-==5150==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5150==    by 0x4011872: _dl_check_map_versions (dl-version.c:293)
-==5150==    by 0x4014EAC: dl_open_worker (dl-open.c:278)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x401437A: _dl_open (dl-open.c:661)
-==5150==    by 0x535902A: dlopen_doit (dlopen.c:66)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x535962C: _dlerror_run (dlerror.c:163)
-==5150==    by 0x53590C0: dlopen@@GLIBC_2.2.5 (dlopen.c:87)
-==5150==    by 0x5CE9C1: php_load_extension (dl.c:144)
-==5150==    by 0x68274D: zend_llist_apply (zend_llist.c:191)
-==5150==    by 0x636839: php_ini_register_extensions (php_ini.c:727)
-==5150== 
-==5150== 1,184 bytes in 1 blocks are still reachable in loss record 6 of 6
-==5150==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5150==    by 0x400BAF3: _dl_new_object (dl-object.c:75)
-==5150==    by 0x4006753: _dl_map_object_from_fd (dl-load.c:1059)
-==5150==    by 0x4008DCF: _dl_map_object (dl-load.c:2605)
-==5150==    by 0x400D5D1: openaux (dl-deps.c:63)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x400DCD4: _dl_map_object_deps (dl-deps.c:254)
-==5150==    by 0x4014A6A: dl_open_worker (dl-open.c:272)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150==    by 0x401437A: _dl_open (dl-open.c:661)
-==5150==    by 0x535902A: dlopen_doit (dlopen.c:66)
-==5150==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
-==5150== 
-==5150== LEAK SUMMARY:
-==5150==    definitely lost: 0 bytes in 0 blocks
-==5150==    indirectly lost: 0 bytes in 0 blocks
-==5150==      possibly lost: 0 bytes in 0 blocks
-==5150==    still reachable: 1,924 bytes in 6 blocks
-==5150==         suppressed: 0 bytes in 0 blocks
-==5150== 
-==5150== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
---5150-- 
---5150-- used_suppression:      1 dl-hack4-64bit-addr-1 /usr/lib/valgrind/default.supp:1235
-==5150== 
-==5150== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==27453== Memcheck, a memory error detector
+==27453== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==27453== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==27453== Command: /usr/local/bin/php psql_adj.php ?
+==27453== Parent PID: 25504
+==27453== 
+--27453-- 
+--27453-- Valgrind options:
+--27453--    -v
+--27453--    --show-leak-kinds=all
+--27453--    --leak-check=full
+--27453--    --log-file=val.log
+--27453-- Contents of /proc/version:
+--27453--   Linux version 3.13.0-32-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+--27453-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-sse3
+--27453-- Page sizes: currently 4096, max supported 4096
+--27453-- Valgrind library directory: /usr/lib/valgrind
+--27453-- Reading syms from /usr/local/bin/php
+--27453-- Reading syms from /lib/x86_64-linux-gnu/ld-2.19.so
+--27453--   Considering /lib/x86_64-linux-gnu/ld-2.19.so ..
+--27453--   .. CRC mismatch (computed 46abf574 wanted 3ca2d3ca)
+--27453--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.19.so ..
+--27453--   .. CRC is valid
+--27453-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--27453--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--27453--   .. CRC mismatch (computed 4f1eed43 wanted a323a3ab)
+--27453--    object doesn't have a symbol table
+--27453--    object doesn't have a dynamic symbol table
+--27453-- Scheduler: using generic scheduler lock implementation.
+--27453-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==27453== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-27453-by-hnd-on-???
+==27453== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-27453-by-hnd-on-???
+==27453== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-27453-by-hnd-on-???
+==27453== 
+==27453== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==27453== don't want to do, unless you know exactly what you're doing,
+==27453== or are doing some strange experiment):
+==27453==   /usr/lib/valgrind/../../bin/vgdb --pid=27453 ...command...
+==27453== 
+==27453== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==27453==   /path/to/gdb /usr/local/bin/php
+==27453== and then give GDB the following command
+==27453==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=27453
+==27453== --pid is optional if only one valgrind process is running
+==27453== 
+--27453-- REDIR: 0x4019c50 (ld-linux-x86-64.so.2:strlen) redirected to 0x380764b1 (???)
+--27453-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--27453--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--27453--   .. CRC mismatch (computed fc68135e wanted 45f5e986)
+--27453--    object doesn't have a symbol table
+--27453-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--27453--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--27453--   .. CRC mismatch (computed ae683f7e wanted 08c06df2)
+--27453--    object doesn't have a symbol table
+==27453== WARNING: new redirection conflicts with existing -- ignoring it
+--27453--     old: 0x04019c50 (strlen              ) R-> (0000.0) 0x380764b1 ???
+--27453--     new: 0x04019c50 (strlen              ) R-> (2007.0) 0x04c2e1a0 strlen
+--27453-- REDIR: 0x4019a00 (ld-linux-x86-64.so.2:index) redirected to 0x4c2dd50 (index)
+--27453-- REDIR: 0x4019c20 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2f2f0 (strcmp)
+--27453-- REDIR: 0x401a970 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31da0 (mempcpy)
+--27453-- Reading syms from /lib/x86_64-linux-gnu/libresolv-2.19.so
+--27453--   Considering /lib/x86_64-linux-gnu/libresolv-2.19.so ..
+--27453--   .. CRC mismatch (computed b2c0b317 wanted 63fc9f84)
+--27453--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libresolv-2.19.so ..
+--27453--   .. CRC is valid
+--27453-- Reading syms from /lib/x86_64-linux-gnu/libm-2.19.so
+--27453--   Considering /lib/x86_64-linux-gnu/libm-2.19.so ..
+--27453--   .. CRC mismatch (computed 08659659 wanted 7ce1b39a)
+--27453--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.19.so ..
+--27453--   .. CRC is valid
+--27453-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.19.so
+--27453--   Considering /lib/x86_64-linux-gnu/libdl-2.19.so ..
+--27453--   .. CRC mismatch (computed 5e07a82d wanted c608f377)
+--27453--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libdl-2.19.so ..
+--27453--   .. CRC is valid
+--27453-- Reading syms from /usr/lib/x86_64-linux-gnu/libxml2.so.2.9.1
+--27453--    object doesn't have a symbol table
+--27453-- Reading syms from /lib/x86_64-linux-gnu/libc-2.19.so
+--27453--   Considering /lib/x86_64-linux-gnu/libc-2.19.so ..
+--27453--   .. CRC mismatch (computed ac9b5ddb wanted a10d05bf)
+--27453--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.19.so ..
+--27453--   .. CRC is valid
+--27453-- Reading syms from /lib/x86_64-linux-gnu/libz.so.1.2.8
+--27453--    object doesn't have a symbol table
+--27453-- Reading syms from /lib/x86_64-linux-gnu/liblzma.so.5.0.0
+--27453--    object doesn't have a symbol table
+--27453-- REDIR: 0x594fc50 (libc.so.6:strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x5951f40 (libc.so.6:strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x594f420 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x594d670 (libc.so.6:strncpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x594bdd0 (libc.so.6:strncmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x594b3f0 (libc.so.6:strcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x594faa0 (libc.so.6:stpcpy) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x5949d10 (libc.so.6:index) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x594ee50 (libc.so.6:bcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x5949f60 (libc.so.6:strcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x59cb9e0 (libc.so.6:__memmove_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x59cb990 (libc.so.6:__memcpy_chk) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x5954620 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x5949b10 (libc.so.6:strcat) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x594d6b0 (libc.so.6:rindex) redirected to 0x4c2da30 (rindex)
+--27453-- REDIR: 0x594b9b0 (libc.so.6:strlen) redirected to 0x4c2e0e0 (strlen)
+--27453-- REDIR: 0x5945660 (libc.so.6:malloc) redirected to 0x4c2ab10 (malloc)
+--27453-- REDIR: 0x5954670 (libc.so.6:__GI_memcpy) redirected to 0x4c2fc90 (__GI_memcpy)
+--27453-- REDIR: 0x595aec0 (libc.so.6:__memcpy_sse2_unaligned) redirected to 0x4c2f6b0 (memcpy@@GLIBC_2.14)
+--27453-- REDIR: 0x594be20 (libc.so.6:__GI_strncmp) redirected to 0x4c2e930 (__GI_strncmp)
+--27453-- REDIR: 0x594f4b0 (libc.so.6:memset) redirected to 0x4c31350 (memset)
+--27453-- REDIR: 0x5945e00 (libc.so.6:realloc) redirected to 0x4c2ce10 (realloc)
+--27453-- REDIR: 0x5949fa0 (libc.so.6:__GI_strcmp) redirected to 0x4c2f200 (__GI_strcmp)
+--27453-- REDIR: 0x594eb00 (libc.so.6:memchr) redirected to 0x4c2f390 (memchr)
+--27453-- REDIR: 0x5949d40 (libc.so.6:__GI_strchr) redirected to 0x4c2db90 (__GI_strchr)
+--27453-- REDIR: 0x594fae0 (libc.so.6:__GI_stpcpy) redirected to 0x4c30da0 (__GI_stpcpy)
+--27453-- REDIR: 0x5945d00 (libc.so.6:free) redirected to 0x4c2bd80 (free)
+--27453-- REDIR: 0x594e300 (libc.so.6:__GI_strstr) redirected to 0x4c32030 (__strstr_sse2)
+--27453-- REDIR: 0x594ee90 (libc.so.6:__GI_memcmp) redirected to 0x4c30b80 (__GI_memcmp)
+--27453-- REDIR: 0x594b430 (libc.so.6:__GI_strcpy) redirected to 0x4c2e2a0 (__GI_strcpy)
+--27453-- REDIR: 0x5a22c60 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c30c00 (__memcmp_sse4_1)
+--27453-- REDIR: 0x5a0d6e0 (libc.so.6:__memcpy_chk_ssse3_back) redirected to 0x4c31e90 (__memcpy_chk)
+--27453-- REDIR: 0x5a157a0 (libc.so.6:__strcasecmp_ssse3) redirected to 0x4c2ea80 (strcasecmp)
+--27453-- REDIR: 0x5946130 (libc.so.6:calloc) redirected to 0x4c2cbf0 (calloc)
+--27453-- Reading syms from /usr/local/lib/php/extensions/no-debug-non-zts-20121212/psql.so
+--27453-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.19.so
+--27453--   Considering /lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--27453--   .. CRC mismatch (computed 88040ace wanted 71b58165)
+--27453--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--27453--   .. CRC is valid
+--27453-- Reading syms from /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0
+--27453--    object doesn't have a symbol table
+--27453-- REDIR: 0x594e8c0 (libc.so.6:strstr) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--27453-- REDIR: 0x595ac10 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c2f1b0 (strcmp)
+--27453-- REDIR: 0x5a178f0 (libc.so.6:__strncasecmp_ssse3) redirected to 0x4c2eb60 (strncasecmp)
+--27453-- REDIR: 0xffffffffff600400 (???:???) redirected to 0x3807649d (???)
+--27453-- REDIR: 0xffffffffff600000 (???:???) redirected to 0x38076493 (???)
+--27453-- REDIR: 0x5964120 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4c31fa0 (strstr)
+--27453-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
+--27453--   Considering /lib/x86_64-linux-gnu/libgcc_s.so.1 ..
+--27453--   .. CRC mismatch (computed 6116126e wanted 54e3f1f2)
+--27453--    object doesn't have a symbol table
+--27453-- REDIR: 0x595fa80 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2e1c0 (strcpy)
+--27453-- REDIR: 0x59569b0 (libc.so.6:strchrnul) redirected to 0x4c319b0 (strchrnul)
+--27453-- Reading syms from /lib/x86_64-linux-gnu/libnss_files-2.19.so
+--27453--   Considering /lib/x86_64-linux-gnu/libnss_files-2.19.so ..
+--27453--   .. CRC mismatch (computed 69b3fb24 wanted 71fe8a31)
+--27453--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libnss_files-2.19.so ..
+--27453--   .. CRC is valid
+--27453-- REDIR: 0x59567a0 (libc.so.6:rawmemchr) redirected to 0x4c319f0 (rawmemchr)
+--27453-- REDIR: 0x5a04060 (libc.so.6:__strncmp_ssse3) redirected to 0x4c2e8c0 (strncmp)
+--27453-- REDIR: 0x5a12c90 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2f450 (memcpy@GLIBC_2.2.5)
+--27453-- REDIR: 0x59cbc30 (libc.so.6:__strcpy_chk) redirected to 0x4c31a30 (__strcpy_chk)
+--27453-- REDIR: 0x594bb70 (libc.so.6:strnlen) redirected to 0x4c2e080 (strnlen)
+--27453-- Discarding syms at 0x6aefff0-0x6af1444 in /usr/local/lib/php/extensions/no-debug-non-zts-20121212/psql.so due to munmap()
+--27453-- Discarding syms at 0x6f3dcf0-0x6fa4d99 in /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0 due to munmap()
+--27453-- Discarding syms at 0x7c4dab0-0x7c5d985 in /lib/x86_64-linux-gnu/libgcc_s.so.1 due to munmap()
+--27453-- Discarding syms at 0x7e632a0-0x7e68eb3 in /lib/x86_64-linux-gnu/libnss_files-2.19.so due to munmap()
+==27453== 
+==27453== HEAP SUMMARY:
+==27453==     in use at exit: 1,924 bytes in 6 blocks
+==27453==   total heap usage: 11,921 allocs, 11,915 frees, 3,906,023 bytes allocated
+==27453== 
+==27453== Searching for pointers to 6 not-freed blocks
+==27453== Checked 298,672 bytes
+==27453== 
+==27453== 32 bytes in 1 blocks are still reachable in loss record 1 of 6
+==27453==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27453==    by 0x4015D78: _dl_close_worker (dl-close.c:379)
+==27453==    by 0x401644B: _dl_close (dl-close.c:773)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x535962C: _dlerror_run (dlerror.c:163)
+==27453==    by 0x535910E: dlclose (dlclose.c:46)
+==27453==    by 0x694F23: module_destructor (zend_API.c:2384)
+==27453==    by 0x69A0A4: zend_hash_apply_deleter (zend_hash.c:650)
+==27453==    by 0x69B8A7: zend_hash_graceful_reverse_destroy (zend_hash.c:687)
+==27453==    by 0x68D99D: zend_shutdown (zend.c:817)
+==27453==    by 0x6301DA: php_module_shutdown (main.c:2384)
+==27453==    by 0x425785: main (php_cli.c:1393)
+==27453== 
+==27453== 38 bytes in 1 blocks are still reachable in loss record 2 of 6
+==27453==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27453==    by 0x40090F3: local_strdup (dl-load.c:162)
+==27453==    by 0x40090F3: _dl_map_object (dl-load.c:2509)
+==27453==    by 0x400D5D1: openaux (dl-deps.c:63)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x400DCD4: _dl_map_object_deps (dl-deps.c:254)
+==27453==    by 0x4014A6A: dl_open_worker (dl-open.c:272)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x401437A: _dl_open (dl-open.c:661)
+==27453==    by 0x535902A: dlopen_doit (dlopen.c:66)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x535962C: _dlerror_run (dlerror.c:163)
+==27453==    by 0x53590C0: dlopen@@GLIBC_2.2.5 (dlopen.c:87)
+==27453== 
+==27453== 38 bytes in 1 blocks are still reachable in loss record 3 of 6
+==27453==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27453==    by 0x400BD93: _dl_new_object (dl-object.c:165)
+==27453==    by 0x4006753: _dl_map_object_from_fd (dl-load.c:1059)
+==27453==    by 0x4008DCF: _dl_map_object (dl-load.c:2605)
+==27453==    by 0x400D5D1: openaux (dl-deps.c:63)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x400DCD4: _dl_map_object_deps (dl-deps.c:254)
+==27453==    by 0x4014A6A: dl_open_worker (dl-open.c:272)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x401437A: _dl_open (dl-open.c:661)
+==27453==    by 0x535902A: dlopen_doit (dlopen.c:66)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453== 
+==27453== 176 bytes in 1 blocks are still reachable in loss record 4 of 6
+==27453==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27453==    by 0x4014041: add_to_global (dl-open.c:106)
+==27453==    by 0x4014F0E: dl_open_worker (dl-open.c:582)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x401437A: _dl_open (dl-open.c:661)
+==27453==    by 0x535902A: dlopen_doit (dlopen.c:66)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x535962C: _dlerror_run (dlerror.c:163)
+==27453==    by 0x53590C0: dlopen@@GLIBC_2.2.5 (dlopen.c:87)
+==27453==    by 0x5CE9C1: php_load_extension (dl.c:144)
+==27453==    by 0x68274D: zend_llist_apply (zend_llist.c:191)
+==27453==    by 0x636839: php_ini_register_extensions (php_ini.c:727)
+==27453== 
+==27453== 456 bytes in 1 blocks are still reachable in loss record 5 of 6
+==27453==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27453==    by 0x4011872: _dl_check_map_versions (dl-version.c:293)
+==27453==    by 0x4014EAC: dl_open_worker (dl-open.c:278)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x401437A: _dl_open (dl-open.c:661)
+==27453==    by 0x535902A: dlopen_doit (dlopen.c:66)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x535962C: _dlerror_run (dlerror.c:163)
+==27453==    by 0x53590C0: dlopen@@GLIBC_2.2.5 (dlopen.c:87)
+==27453==    by 0x5CE9C1: php_load_extension (dl.c:144)
+==27453==    by 0x68274D: zend_llist_apply (zend_llist.c:191)
+==27453==    by 0x636839: php_ini_register_extensions (php_ini.c:727)
+==27453== 
+==27453== 1,184 bytes in 1 blocks are still reachable in loss record 6 of 6
+==27453==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27453==    by 0x400BAF3: _dl_new_object (dl-object.c:75)
+==27453==    by 0x4006753: _dl_map_object_from_fd (dl-load.c:1059)
+==27453==    by 0x4008DCF: _dl_map_object (dl-load.c:2605)
+==27453==    by 0x400D5D1: openaux (dl-deps.c:63)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x400DCD4: _dl_map_object_deps (dl-deps.c:254)
+==27453==    by 0x4014A6A: dl_open_worker (dl-open.c:272)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453==    by 0x401437A: _dl_open (dl-open.c:661)
+==27453==    by 0x535902A: dlopen_doit (dlopen.c:66)
+==27453==    by 0x400FFC3: _dl_catch_error (dl-error.c:187)
+==27453== 
+==27453== LEAK SUMMARY:
+==27453==    definitely lost: 0 bytes in 0 blocks
+==27453==    indirectly lost: 0 bytes in 0 blocks
+==27453==      possibly lost: 0 bytes in 0 blocks
+==27453==    still reachable: 1,924 bytes in 6 blocks
+==27453==         suppressed: 0 bytes in 0 blocks
+==27453== 
+==27453== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--27453-- 
+--27453-- used_suppression:      1 dl-hack4-64bit-addr-1 /usr/lib/valgrind/default.supp:1235
+==27453== 
+==27453== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
